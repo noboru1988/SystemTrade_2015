@@ -14,6 +14,7 @@ public class Insert_Pstmt {
 	//どちらも正の整数を入力するものとする。
 	//レコード数が増えた時の処理をもっと軽やかにしたい。
 	public static String insertFooder(int questionNum,int recordNum){
+		try{
 		switch(recordNum){
 			case 1:
 				sqlRecord = getQuestion(questionNum);
@@ -23,6 +24,9 @@ public class Insert_Pstmt {
 				for (int i =1;i<recordNum;i++){
 					sqlRecord = sqlRecord + "," + getQuestion(questionNum);
 				}
+		}
+		}catch(Exception e){
+			System.out.println("パンク");
 		}
 		return " " + sqlRecord + " ";
 	}
