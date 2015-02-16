@@ -183,11 +183,9 @@ public class NetSuper {
 				//AがskipDay以前のものであればaddしない
 				if(skipDay.compareTo(lineRecord)<0){
 					//入れる
-					if (lineRecord.startsWith(skipDay)){
 
-					}else{
 						netFile.add(lineRecord);
-					}
+
 				}
 
 
