@@ -190,7 +190,7 @@ public class createTBL {
 					+ "long_3_sigma float,"
 					+ "short_MACD double,"
 					+ "short_MACD_signal double,"
-
+					+ "INDEX idx_day(dayTime),"
 					+ "unique (dayTime),primary key(id)) ";
 
 

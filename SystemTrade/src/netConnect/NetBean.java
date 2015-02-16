@@ -29,9 +29,9 @@ public class NetBean extends NetSuper{
 		//重複データを入れないような工夫をしている
 		Calendar calendar = Calendar.getInstance();
 		int thisYear = calendar.get(Calendar.YEAR);
-			setNetCSV(Net_Adress.getTimeSeriesCSV_URL_DD(stockName,thisYear),2,MAX_DAY_HAIHUN);
-			System.out.println(Net_Adress.getTimeSeriesCSV_URL_DD(stockName,thisYear));
-			System.out.println("1:" + getFlg());
+		setNetCSV(Net_Adress.getTimeSeriesCSV_URL_DD(stockName,thisYear),2,MAX_DAY_HAIHUN);
+		System.out.println(Net_Adress.getTimeSeriesCSV_URL_DD(stockName,thisYear));
+		System.out.println("1:" + getFlg());
 //		int j = 1;
 //
 //		while(getFlg()==false){
@@ -51,8 +51,8 @@ public class NetBean extends NetSuper{
 			if (getFlg()==false){
 				break;
 			}
-			
-			
+
+
 			count++;
 		}
 		System.out.println("カウント" + count);
@@ -62,7 +62,7 @@ public class NetBean extends NetSuper{
 		//MAX_Dの取得
 		Collections.sort(codeList_Stock);
 		System.out.println(stockName + "の追加レコード数：" + codeList_Stock.size());
-		
+
 		for(int i = 0;i<codeList_Stock.size();i++){
 			codeList_Stock_Sprit = codeList_Stock.get(i).split(",") ;
 			DTO_B_T = new Bean_TBLRecord();
