@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import SQLMETHOD.TESTSQL;
 import controller.Create;
 import controller.GetCodeList;
+import controller.GetTimeSeries;
 
 //いろいろテストする。
 
@@ -90,15 +91,15 @@ public class TAB_test extends JPanel {
 //			s.closeConection();
 
 			GetCodeList a = new GetCodeList();
-			
-			
-			aa.createCodeTBL();
-			a.controllGetStockList();
-			aa.createTimeSereisTBL_DD();
 
 
-//			GetTimeSeries gt = new GetTimeSeries ();
-//			gt.getTimeSeries_DD();
+//			aa.createCodeTBL();
+//			a.controllGetStockList();
+//			aa.createTimeSereisTBL_DD();
+
+
+			GetTimeSeries gt = new GetTimeSeries ();
+			gt.getTimeSeries_DD();
 			//x.codeGetter();
 			textArea_SQLresult.append(textField.getText() + "\n");
 		}

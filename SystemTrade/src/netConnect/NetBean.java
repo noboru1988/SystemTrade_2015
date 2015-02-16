@@ -53,7 +53,7 @@ public class NetBean extends NetSuper{
 		codeList_Stock = getNetCSV();
 		//MAX_Dの取得
 		Collections.sort(codeList_Stock);
-
+		System.out.println(codeList_Stock.size());
 		for(int i = 0;i<codeList_Stock.size();i++){
 			codeList_Stock_Sprit = codeList_Stock.get(i).split(",") ;
 			DTO_B_T = new Bean_TBLRecord();
