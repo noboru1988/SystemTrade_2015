@@ -49,6 +49,7 @@ public class InsertStock extends InsertSuper {
 			} catch (SQLException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
+				System.out.println(stock + "でなんかエラー化も");
 			}
 		}
 
