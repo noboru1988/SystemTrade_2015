@@ -19,6 +19,9 @@ public class InsertCodeList extends InsertSuper  {
 
 	public void c_InsertStockList(List<Bean_CodeList> B_C_List,S s){
 		int Num = B_C_List.size();
+		if (Num == 0){
+			return;
+		}
 
 		SQL = "insert into " + TBL_Name.CODELISTTBL + " (code,codeName,market,category,company_flg,etf_flg) values " + Insert_Pstmt.insertFooder(6,Num);
 

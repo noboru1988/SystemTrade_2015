@@ -55,10 +55,22 @@ public class NetSuper {
 					stopFlg = false;
 					return;
 				}else{
-					netFile.add(lineRecord);
+					//Aの先頭文字がskiplineに等しくなければnetFileに追加する。
+					//AがskipTime以前のものであればaddしない
+					if(skipTime.compareTo(lineRecord)<0){
+						//入れる
+						netFile.add(lineRecord);
+					}
 				}
 			}catch(IndexOutOfBoundsException e){
-				netFile.add(lineRecord);
+
+				//Aの先頭文字がskiplineに等しくなければnetFileに追加する。
+				//AがskipTime以前のものであればaddしない
+				if(skipTime.compareTo(lineRecord)<0){
+					//入れる
+					netFile.add(lineRecord);
+				}
+
 			}
 
 
@@ -137,10 +149,22 @@ public class NetSuper {
 					stopFlg = false;
 					return;
 				}else{
-					netFile.add(lineRecord);
+
+					//AがskipDay以前のものであればaddしない
+					if(skipDay.compareTo(lineRecord)<0){
+						//入れる
+						netFile.add(lineRecord);
+					}
+
 				}
 			}catch(IndexOutOfBoundsException e){
-				netFile.add(lineRecord);
+
+				//AがskipDay以前のものであればaddしない
+				if(skipDay.compareTo(lineRecord)<0){
+					//入れる
+					netFile.add(lineRecord);
+				}
+
 			}
 
 
@@ -202,17 +226,17 @@ public class NetSuper {
 			}
 
 			String lineRecord = baf.readLine();
-			
+
 			//重複ファイルのチェックを行う。netFileの0番目と現在読み取ったファイルの一行目を比較する。
 			//同じだった場合、処理終了
 			//異なった場合、処理続行
 			try{
-				
+
 				System.out.println(lineRecord);
 				System.out.println(netFile.get(0));
 				System.out.println(lineRecord.equals(netFile.get(0)));
 				if (lineRecord.equals(netFile.get(0))){
-					
+
 					stopFlg = false;
 					return;
 				}else{
