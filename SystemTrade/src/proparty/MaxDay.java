@@ -57,6 +57,8 @@ public class MaxDay {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			// TODO 自動生成された catch ブロック
+		} catch(NullPointerException e1){
+			MAX_HAIHUN = "1900-01-01";
 		}
 
 		if (MAX_HAIHUN==null){
