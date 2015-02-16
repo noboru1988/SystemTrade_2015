@@ -30,10 +30,10 @@ public class GetTimeSeries {
 
 		md.getMAX_DD_SLUSH();
 		for (int i = 0;i<TBL_DD_num;i++){
-			md.setMAX_DD_SLUSH(TBL_Name.getCodeList().get(i),s);
+			md.setMAX_DD_HAIHUN(TBL_Name.getCodeList_NoHauhun().get(i),s);
 
 			DTO_B_T_List = new ArrayList<Bean_TBLRecord>();
-			NB.setCodeDD( DTO_B_T_List ,TBL_Name.getCodeList().get(i),md.getMAX_DD_SLUSH());
+			NB.setCodeDD( DTO_B_T_List ,TBL_Name.getCodeList().get(i),md.getMAX_DD_HAIHUN());
 			IS.c_InsertStock_DD(NB.getCodeDD(), TBL_Name.getCodeList_NoHauhun().get(i),s);
 		}
 		s.closeConection();

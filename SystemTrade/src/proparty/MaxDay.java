@@ -44,14 +44,18 @@ public class MaxDay {
 		TBLName = TBLName + TBL_Name.TAIL_DAY;
 		SQL = "select max(dayTime) from " + TBLName;
 		s.setPstmt(SQL);
+
 		try {
+
 			s.p_rs = s.getPstmt().executeQuery(SQL);
 
 			while (s.p_rs.next()) {
-				MAX_HAIHUN = s.p_rs.getDate("dayTime").toString();
-			}
+				MAX_HAIHUN = s.p_rs.getDate(1).toString();
 
+			}
+			System.out.println(TBLName + "のMAX：" + MAX_HAIHUN);
 		} catch (SQLException e) {
+			e.printStackTrace();
 			// TODO 自動生成された catch ブロック
 		}
 

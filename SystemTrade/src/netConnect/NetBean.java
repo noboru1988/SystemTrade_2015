@@ -41,19 +41,28 @@ public class NetBean extends NetSuper{
 //			System.out.println("whie:" + getFlg());
 //		}
 //		System.out.println("外:" + getFlg());
+			int count = 1;
 		for (int k = 1;k<PROPARTY.COLLECTYEAR;k++){
+
+			if (getEndFlg()==false){
+				break;
+			}
 			setPlusNetCSV(Net_Adress.getTimeSeriesCSV_URL_DD(stockName,thisYear - k),2,MAX_DAY_HAIHUN);
 			if (getFlg()==false){
 				break;
 			}
-			System.out.println(k);
+			
+			
+			count++;
 		}
-
+		System.out.println("カウント" + count);
 
 		codeList_Stock = getNetCSV();
+		System.out.println("ソート終わり");
 		//MAX_Dの取得
 		Collections.sort(codeList_Stock);
-		System.out.println(codeList_Stock.size());
+		System.out.println(stockName + "の追加レコード数：" + codeList_Stock.size());
+		
 		for(int i = 0;i<codeList_Stock.size();i++){
 			codeList_Stock_Sprit = codeList_Stock.get(i).split(",") ;
 			DTO_B_T = new Bean_TBLRecord();

@@ -25,10 +25,13 @@ public class InsertStock extends InsertSuper {
 
 	public void c_InsertStock_DD(List<Bean_TBLRecord> B_T_List,String stock,S s){
 		int Num = B_T_List.size();
-
+		if(Num == 0){
+			System.out.println(stock + "は今日はゼロ！");
+			return;
+		}
 		SQL = "insert into " + stock + TBL_Name.TAIL_DAY + " (dayTime,open,max,min,close,ajust_open,ajust_max,ajust_min,ajust_close,DEKI,BAYBAY) values " + Insert_Pstmt.insertFooder(11,Num);
 		s.setPstmt(SQL);
-
+		System.out.println("追加レコード:" + B_T_List.get(0).getDay());
 		for (int i = 0;i<Num;i++){
 			try {
 				s.getPstmt().setString(i*11 + 1, B_T_List.get(i).getDay()    );

@@ -13,7 +13,7 @@ public class NetSuper {
 	//skipDay,skipTimeがnullの場合の処理
 	private List<String> netFile = new ArrayList<String>();
 	private boolean stopFlg;
-
+	private boolean endFlg;
 
 
 	//URL、スキップする行数、スキップする日付よりも小さい日付、スキップするよりも小さいタイム
@@ -103,19 +103,19 @@ public class NetSuper {
 	public void setNetCSV(String URL,int skipLine,String skipDay,String skipTime){
 		netFile = new ArrayList<String>();
 		stopFlg = true;
+		endFlg = true;
 		setPlusNetCSV(URL,skipLine,skipTime);
 	}
 
 	public void setNetCSV(String URL,int skipLine,String skipDay){
 		netFile = new ArrayList<String>();
 		stopFlg = true;
+		endFlg = true;
 		setPlusNetCSV(URL,skipLine,skipDay);
 	}
 
 	public void setPlusNetCSV(String URL,int skipLine,String skipDay){
-		if (skipDay == null) {
 
-		}
 		HttpURLConnection connect = null;
 		URL url = null;
 		InputStream in = null;
@@ -145,6 +145,7 @@ public class NetSuper {
 			//同じだった場合、処理終了
 			//異なった場合、処理続行
 			try{
+				//繰り返しページのチェック
 				if (lineRecord.equals(netFile.get(0))){
 					stopFlg = false;
 					return;
@@ -153,7 +154,11 @@ public class NetSuper {
 					//AがskipDay以前のものであればaddしない
 					if(skipDay.compareTo(lineRecord)<0){
 						//入れる
-						netFile.add(lineRecord);
+//						if (lineRecord.startsWith(skipDay)){
+//
+//						}else{
+							netFile.add(lineRecord);
+//						}
 					}
 
 				}
@@ -162,8 +167,14 @@ public class NetSuper {
 				//AがskipDay以前のものであればaddしない
 				if(skipDay.compareTo(lineRecord)<0){
 					//入れる
-					netFile.add(lineRecord);
+					if (lineRecord.startsWith(skipDay)){
+						endFlg = false;
+						return;
+					}else{
+						netFile.add(lineRecord);
+					}
 				}
+
 
 			}
 
@@ -172,7 +183,11 @@ public class NetSuper {
 				//AがskipDay以前のものであればaddしない
 				if(skipDay.compareTo(lineRecord)<0){
 					//入れる
-					netFile.add(lineRecord);
+					if (lineRecord.startsWith(skipDay)){
+
+					}else{
+						netFile.add(lineRecord);
+					}
 				}
 
 
@@ -197,6 +212,7 @@ public class NetSuper {
 
 	public void setNetCSV(String URL,int skipLine){
 		stopFlg = true;
+		endFlg = true;
 		netFile = new ArrayList<String>();
 		setPlusNetCSV(URL,skipLine);
 
@@ -327,5 +343,9 @@ public class NetSuper {
 
 	public boolean getFlg(){
 		return stopFlg;
+	}
+
+	public boolean getEndFlg(){
+		return endFlg;
 	}
 }
