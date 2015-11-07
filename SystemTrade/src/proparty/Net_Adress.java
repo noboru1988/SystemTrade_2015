@@ -7,6 +7,13 @@ public class Net_Adress {
 	 * 株価データのコードリスト一覧
 	 */
 	public static String CODELIST_STOCK = "http://k-db.com/stocks/2015-02-03a?download=csv";
+	public static String INDEX = "http://k-db.com/indices/2015-05-08a?download=csv";
+	public static String STATISTICS = "http://k-db.com/statistics/2015-05-08a?download=csv";
+	public static String FUTURES = "http://k-db.com/futures/2015-05-08a?download=csv";
+	public static String INDEX_STOCK = "http://k-db.com/?p=all&download=csv&";
+
+
+
 
 	/**
 	 * 株価データの個別リストの日足取得

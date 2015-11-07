@@ -84,8 +84,15 @@ public class S {
 
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			System.out.println(sql);
+
+
+//			System.out.println("S:普通のテーブル重複");
+			//同じテーブルが存在した以外のエラーの場合以下を処理する。
+			if(e.getErrorCode()!=1050){
+				e.printStackTrace();
+				System.out.println(sql);
+			}
+
 
 		}
 	}

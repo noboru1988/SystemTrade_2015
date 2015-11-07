@@ -1,12 +1,12 @@
 package netConnect;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
 import proparty.Net_Adress;
-import proparty.PROPARTY;
 import bean.Bean_CodeList;
 import bean.Bean_TBLRecord;
 
@@ -18,20 +18,45 @@ public class NetBean extends NetSuper{
 	private String[] codeList_Stock_Sprit;
 	private Bean_CodeList DTO_B_C;
 	private Bean_TBLRecord DTO_B_T;
-	private List<Bean_CodeList> DTO_B_C_LIST = new ArrayList<Bean_CodeList>();
+	private List<Bean_CodeList> DTO_B_C_LIST_STOCK = new ArrayList<Bean_CodeList>();
+	private List<Bean_CodeList> DTO_B_C_LIST_IDX = new ArrayList<Bean_CodeList>();
+	private List<Bean_CodeList> DTO_B_C_LIST_Statistical = new ArrayList<Bean_CodeList>();
+	private List<Bean_CodeList> DTO_B_C_LIST_Future = new ArrayList<Bean_CodeList>();
+	private List<Bean_CodeList> DTO_B_C_LIST_Currency = new ArrayList<Bean_CodeList>();
 	private List<Bean_TBLRecord> DTO_B_T_LIST = new ArrayList<Bean_TBLRecord>();
 	private int x =0;
 	int year;
 	private String[][] codeList_Stock_Array2;
 
+	public void takeCSV(){
+		Calendar calendar = Calendar.getInstance();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		calendar.add(Calendar.DAY_OF_MONTH, -10000);
+
+		System.out.println(sdf1.format(calendar.getTime()));
+
+	}
+
+
+
+
+	public void setINDEXDD(List<Bean_TBLRecord> DTO,String indexName,String MAX_DAY_HAIHUN){
+
+	}
+
+	//sleepTime:連続アクセスするとリジェクトされるのでsleepTimeミリ秒の間隔を置いてデータ取得。
 	public void setCodeDD(List<Bean_TBLRecord> DTO,String stockName,String MAX_DAY_HAIHUN){
+
+
 
 		//重複データを入れないような工夫をしている
 		Calendar calendar = Calendar.getInstance();
 		int thisYear = calendar.get(Calendar.YEAR);
 		setNetCSV(Net_Adress.getTimeSeriesCSV_URL_DD(stockName,thisYear),2,MAX_DAY_HAIHUN);
-		System.out.println(Net_Adress.getTimeSeriesCSV_URL_DD(stockName,thisYear));
-		System.out.println("1:" + getFlg());
+
+//		System.out.println("NETBEAN1" + Net_Adress.getTimeSeriesCSV_URL_DD(stockName,thisYear));
+
+
 //		int j = 1;
 //
 //		while(getFlg()==false){
@@ -42,28 +67,38 @@ public class NetBean extends NetSuper{
 //		}
 //		System.out.println("外:" + getFlg());
 			int count = 1;
-		for (int k = 1;k<PROPARTY.COLLECTYEAR;k++){
 
-			if (getEndFlg()==false){
-				break;
-			}
-			setPlusNetCSV(Net_Adress.getTimeSeriesCSV_URL_DD(stockName,thisYear - k),2,MAX_DAY_HAIHUN);
-			if (getFlg()==false){
-				break;
-			}
+//			System.out.println("SetCodeDD1:" + getEndFlg() + ":" + getFlg());
+		while(getEndFlg() && getFlg()){
 
-
+//			System.out.println("NETBeam2" + Net_Adress.getTimeSeriesCSV_URL_DD(stockName,thisYear - count));
+			setPlusNetCSV(Net_Adress.getTimeSeriesCSV_URL_DD(stockName,thisYear - count),2,MAX_DAY_HAIHUN);
 			count++;
+
 		}
-		System.out.println("カウント" + count);
+		System.out.println("SetCodeDD2:" + getEndFlg() + ":" + getFlg());
+//		WHILEがだめなら以下のfor分を動かす
+//		for (int k = 1;k<PROPARTY.COLLECTYEAR;k++){
+//
+//			if (getEndFlg()==false){
+//				break;
+//			}
+//			setPlusNetCSV(Net_Adress.getTimeSeriesCSV_URL_DD(stockName,thisYear - k),2,MAX_DAY_HAIHUN);
+//			if (getFlg()==false){
+//				break;
+//			}
+//			count++;
+//		}
+//		System.out.println("カウント" + count);
 
 		codeList_Stock = getNetCSV();
-		System.out.println("ソート終わり");
+
 		//MAX_Dの取得
 		Collections.sort(codeList_Stock);
 		System.out.println(stockName + "の追加レコード数：" + codeList_Stock.size());
 
 		for(int i = 0;i<codeList_Stock.size();i++){
+
 			codeList_Stock_Sprit = codeList_Stock.get(i).split(",") ;
 			DTO_B_T = new Bean_TBLRecord();
 			DTO_B_T.setDay    (codeList_Stock_Sprit[0]);
@@ -82,6 +117,107 @@ public class NetBean extends NetSuper{
 	public List<Bean_TBLRecord> getCodeDD(){
 		return DTO_B_T_LIST;
 	}
+
+
+	//通貨リストをセットする。
+	//未完成
+
+
+	//通貨リストをゲットする。
+
+
+	//先物リストセットする
+	//未完成
+	public void setCodeList_FUTURE(List<Bean_CodeList> DTO){
+
+		setNetCSV(Net_Adress.FUTURES,2);
+		codeList_Stock = getNetCSV();
+		Collections.sort(codeList_Stock);
+
+
+		 for(int i=0;i<codeList_Stock.size();i++){
+			 DTO_B_C = new Bean_CodeList();
+			 //","でなく" "を使っているのは先物の区切りがおかしいから。
+			 //URL見るとわかる
+			 codeList_Stock_Sprit = codeList_Stock.get(i).split(" ") ;
+
+			 DTO_B_C.setFuture_flg();
+
+			 //ここらへんを変える
+			 DTO_B_C.setCodeName        (codeList_Stock_Sprit[0]);
+			 DTO.add(DTO_B_C);
+
+		 }
+
+		 DTO_B_C_LIST_Future = DTO;
+
+
+	}
+
+	//先物リストをゲットする。
+	public List<Bean_CodeList> getCodeList_FUTURE(){
+		return DTO_B_C_LIST_Future;
+	}
+
+	//市場統計リストをセットする
+	//未完成
+	public void setCodeList_Statistical(List<Bean_CodeList> DTO){
+		setNetCSV(Net_Adress.STATISTICS,2);
+		codeList_Stock = getNetCSV();
+		Collections.sort(codeList_Stock);
+
+
+		 for(int i=0;i<codeList_Stock.size();i++){
+			 DTO_B_C = new Bean_CodeList();
+
+			 codeList_Stock_Sprit = codeList_Stock.get(i).split(",") ;
+
+			 DTO_B_C.setStatistical_flg();
+
+
+			 //ここらへんを変える
+			 DTO_B_C.setCodeName        (codeList_Stock_Sprit[0]);
+			 DTO.add(DTO_B_C);
+
+		 }
+
+		 DTO_B_C_LIST_Statistical = DTO;
+	}
+
+//	統計リストを取得
+	public List<Bean_CodeList> getCodeList_Statistical(){
+		return DTO_B_C_LIST_Statistical;
+	}
+
+	//インデックス、指標リストを取得する
+	//未完成
+	public void setCodeList_Index(List<Bean_CodeList> DTO){
+		setNetCSV(Net_Adress.INDEX,2);
+		codeList_Stock = getNetCSV();
+		Collections.sort(codeList_Stock);
+
+		 for(int i=0;i<codeList_Stock.size();i++){
+			 DTO_B_C = new Bean_CodeList();
+
+			 codeList_Stock_Sprit = codeList_Stock.get(i).split(",") ;
+
+			 DTO_B_C.setIndex_flg();
+
+
+			 //ここらへんを変える
+			 DTO_B_C.setCodeName       (codeList_Stock_Sprit[0]);
+			 DTO.add(DTO_B_C);
+
+		 }
+
+		 DTO_B_C_LIST_IDX = DTO;
+	}
+
+	//指標リストが取得できる。
+	public List<Bean_CodeList> getCodeList_Index(){
+		return DTO_B_C_LIST_IDX;
+	}
+
 
 	public void setCodeList_Stock(List<Bean_CodeList> DTO){
 		setNetCSV(Net_Adress.CODELIST_STOCK,2);
@@ -107,12 +243,12 @@ public class NetBean extends NetSuper{
 
 		 }
 
-		 DTO_B_C_LIST = DTO;
+		 DTO_B_C_LIST_STOCK = DTO;
 	}
 
 	//二次元配列で証券コードリストが取得できる。
 	public List<Bean_CodeList> getCodeList_Stock(){
-		return DTO_B_C_LIST;
+		return DTO_B_C_LIST_STOCK;
 	}
 
 

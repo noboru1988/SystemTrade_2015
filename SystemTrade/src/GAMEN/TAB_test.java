@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import netConnect.NetBean;
 import SQLMETHOD.TESTSQL;
 import controller.Create;
 import controller.GetCodeList;
@@ -91,15 +92,23 @@ public class TAB_test extends JPanel {
 //			s.closeConection();
 
 			GetCodeList a = new GetCodeList();
-
-
+			NetBean NB = new NetBean();
+			NB.takeCSV();
+			
+//コードリストテーブルを作る
 //			aa.createCodeTBL();
+
 //			a.controllGetStockList();
+
+//			a.controllGetFutureList();
+//			a.controllGetIndexList();
+//			a.controllGetStatisticalList();
+//			//証券とETFテーブルを作る
 //			aa.createTimeSereisTBL_DD();
 
-
+//各日々データの取得
 			GetTimeSeries gt = new GetTimeSeries ();
-			gt.getTimeSeries_DD();
+//			gt.getTimeSeries_DD();
 			//x.codeGetter();
 			textArea_SQLresult.append(textField.getText() + "\n");
 		}

@@ -47,4 +47,7 @@ public class Insert_Pstmt {
 		return sqlQuestion;
 	}
 
+	public static void serStmt(){
+		
+	}
 }

@@ -33,6 +33,7 @@ public class MaxDay {
 		}
 
 		if (MAX_SLUSH==null){
+
 			MAX_SLUSH = "1900/01/01";
 		}
 
@@ -41,8 +42,10 @@ public class MaxDay {
 	//YYYY-MM-DDでとってくる
 	public static void setMAX_DD_HAIHUN(String TBLName,S s){
 		MAX_HAIHUN = null;
-		TBLName = TBLName + TBL_Name.TAIL_DAY;
+		//-を―に変える。DBには―で入っている
+		TBLName = TBLName.replace("-","―") + TBL_Name.TAIL_DAY;
 		SQL = "select max(dayTime) from " + TBLName;
+
 		s.setPstmt(SQL);
 
 		try {
@@ -53,15 +56,17 @@ public class MaxDay {
 				MAX_HAIHUN = s.p_rs.getDate(1).toString();
 
 			}
-			System.out.println(TBLName + "のMAX：" + MAX_HAIHUN);
+//			System.out.println(TBLName + "のMAX(setMAX_DD_HAIHUN)：" + MAX_HAIHUN);
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			// TODO 自動生成された catch ブロック
 		} catch(NullPointerException e1){
 			MAX_HAIHUN = "1900-01-01";
+
 		}
 
 		if (MAX_HAIHUN==null){
+			System.out.println("aaaaaaaaaaaaaa");
 			MAX_HAIHUN = "1900-01-01";
 		}
 

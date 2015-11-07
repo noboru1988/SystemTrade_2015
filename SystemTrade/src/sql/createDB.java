@@ -19,6 +19,7 @@ public class createDB {
 			} catch (SQLException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
+				System.out.println(e.getErrorCode());
 			}
 			
 		}

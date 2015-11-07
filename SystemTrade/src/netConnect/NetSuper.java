@@ -9,12 +9,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import proparty.PROPARTY;
+
 public class NetSuper {
 	//skipDay,skipTimeがnullの場合の処理
 	private List<String> netFile = new ArrayList<String>();
 	private boolean stopFlg;
 	private boolean endFlg;
-
+//	private int timeCount=30000;
 
 	//URL、スキップする行数、スキップする日付よりも小さい日付、スキップするよりも小さいタイム
 	public void setPlusNetCSV(String URL,int skipLine,String skipDay,String skipTime){
@@ -132,39 +134,87 @@ public class NetSuper {
 			isr = new InputStreamReader( in,"SJIS");
 			baf = new BufferedReader(isr);
 
+			if(baf.readLine()==null){
+				stopFlg = false;
+
+				System.out.println("NetSuper-2:とまる" + URL);
+
+				//ちょっとだけ時間に間を置く。連続アクセスするとリジェクトされる。
+				try {
+					Thread.sleep(PROPARTY.SLEEPTIME);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+
+				System.out.println("NetSuper-３:とまる" + URL);
+				setNetCSV(URL,skipLine,skipDay);
+				int count = 1;
+				while(getEndFlg() && getFlg()){
+					setPlusNetCSV(URL,skipLine,skipDay);
+					count++;
+				}
+				return;
+			}
+
 			//スキップラインに入力された数だけ遅らせる。
-			for (int i = 0;i<skipLine;i++){
+			for (int i = 1;i<skipLine;i++){
 				baf.readLine();
 			}
 
 
 
 			String lineRecord = baf.readLine();
+			System.out.println("NETSUPERR最初のチェックline:" + lineRecord);
+			if(lineRecord.equals("<META HTTP-EQUIV=\"Content-Type\" Content=\"text/html; charset=us-ascii\"></HEAD>")){
+				System.out.println("ちょいやば");
+				try {
+					Thread.sleep(PROPARTY.SLEEPTIME);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+
+				System.out.println("NetSuper-３:とまる" + URL);
+				setNetCSV(URL,skipLine,skipDay);
+				int count = 1;
+				while(getEndFlg() && getFlg()){
+					setPlusNetCSV(URL,skipLine,skipDay);
+					count++;
+				}
+				return;
+			}
 
 			//重複ファイルのチェックを行う。netFileの0番目と現在読み取ったファイルの一行目を比較する。
 			//同じだった場合、処理終了
 			//異なった場合、処理続行
 			try{
 				//繰り返しページのチェック
+//				System.out.println("NETSUPERR次のチェック:" + netFile.get(0));
+//				System.out.println("NETSUPERRその次のチェック:" + lineRecord.equals(netFile.get(0)));
 				if (lineRecord.equals(netFile.get(0))){
 					stopFlg = false;
+					System.out.println("NETBEAN次にいく");
+
 					return;
 				}else{
 
 					//AがskipDay以前のものであればaddしない
 					if(skipDay.compareTo(lineRecord)<0){
 						//入れる
-//						if (lineRecord.startsWith(skipDay)){
-//
-//						}else{
-							netFile.add(lineRecord);
-//						}
+						//						if (lineRecord.startsWith(skipDay)){
+						//
+						//						}else{
+						netFile.add(lineRecord);
+//						System.out.println("ここだよおおお1Line:" + lineRecord);
+//						System.out.println("ここだよおおお1skip:" + skipDay);
+						//						}
 					}
 
 				}
 			}catch(IndexOutOfBoundsException e){
 
-				//AがskipDay以前のものであればaddしない
+				//AがskipDay以前のものであればaddしない。同日ももちろんaddしない。
 				if(skipDay.compareTo(lineRecord)<0){
 					//入れる
 					if (lineRecord.startsWith(skipDay)){
@@ -172,6 +222,10 @@ public class NetSuper {
 						return;
 					}else{
 						netFile.add(lineRecord);
+						//正常？
+//						System.out.println("ここだよおおお2lineRecord:" + lineRecord);
+//						System.out.println("ここだよおおお2Skipday:" + skipDay);
+//						System.out.println("ここだよおおお2:" + URL);
 					}
 				}
 
@@ -183,19 +237,34 @@ public class NetSuper {
 				//AがskipDay以前のものであればaddしない
 				if(skipDay.compareTo(lineRecord)<0){
 					//入れる
-
+					if (lineRecord.startsWith(skipDay)){
+						endFlg = false;
+						return;
+					}else{
 						netFile.add(lineRecord);
-
+						//正常？
+					}
+//
+//						System.out.println(("たぶんここ0" + skipDay.compareTo(skipDay)));
+//						System.out.println(("たぶんここ１" + lineRecord.compareTo(skipDay)));
+//						System.out.println(("たぶんここ２" + skipDay.compareTo(lineRecord)));
+//						System.out.println("たぶんここ3" + "2015-07-17".compareTo("2015-07-18,-,-,-,-,0,0"));
+//						System.out.println("たぶんここ4" + "2015-07-17".compareTo("2015-07-17,-,-,-,-,0,0"));
+//						System.out.println("たぶんここ5" + "2015-07-17".compareTo("2015-07-16,-,-,-,-,0,0"));
+//						System.out.println("ここだよおおお3line:" + lineRecord);
+//						System.out.println("ここだよおおお3skip:" + skipDay);
 				}
-
-
 			}
-		}catch(Exception e){
+		}catch(NullPointerException e1){
+			//skipLineがNULLの時にここを通る。
+			stopFlg = false;
+			System.out.println("NETSUPERたぶんページがないよ：" + URL);
+		}catch(Exception e2){
 			//例外処理が発生したら、表示する
 			//			System.out.println("Err =" + e);
-			e.printStackTrace();
+			e2.printStackTrace();
 			stopFlg = false;
-			System.out.println("ページがないよ：" + URL);
+			System.out.println("なんかほかのエラー：" + URL);
 		}finally{
 			try {
 				//				URL切断
@@ -204,6 +273,8 @@ public class NetSuper {
 				in.close();//InputStreamを閉じる
 				connect.disconnect();//サイトの接続を切断
 			} catch (IOException e) {
+				System.out.println("なぜか通っている");
+				e.printStackTrace();
 			}
 		}
 	}
@@ -266,6 +337,8 @@ public class NetSuper {
 
 				netFile.add(lineRecord);
 			}
+		}catch(IOException e1){
+			System.out.println("ページがないよ503：" + URL);
 		}catch(Exception e){
 			//例外処理が発生したら、表示する
 			//			System.out.println("Err =" + e);
