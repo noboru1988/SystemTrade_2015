@@ -12,6 +12,12 @@ public class Net_Adress {
 	public static String FUTURES = "http://k-db.com/futures/2015-05-08a?download=csv";
 	public static String INDEX_STOCK = "http://k-db.com/?p=all&download=csv&";
 
+	public static String STOCK_LIST = "http://k-db.com/stocks/";
+	public static String INDEX_LIST = "http://k-db.com/indices/";
+	public static String STATISTICS_LIST = "http://k-db.com/statistics/";
+	public static String FUTURE_LIST = "http://k-db.com/futures/";
+	public static String DOWN_CSV = "?download=csv";
+
 
 
 

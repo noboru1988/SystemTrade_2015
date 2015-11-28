@@ -1,5 +1,11 @@
 package netConnect;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,8 +13,11 @@ import java.util.Collections;
 import java.util.List;
 
 import proparty.Net_Adress;
+import proparty.PROPARTY;
 import bean.Bean_CodeList;
 import bean.Bean_TBLRecord;
+
+
 
 public class NetBean extends NetSuper{
 
@@ -28,11 +37,101 @@ public class NetBean extends NetSuper{
 	int year;
 	private String[][] codeList_Stock_Array2;
 
+	private List<String> netFile = new ArrayList<String>();
+	private List<List<String>> netFileS = new ArrayList<List <String>>();
+
+
+
+	public void setUrlCsv(String URL,int skipLine){
+		netFile = new ArrayList<String>();
+		HttpURLConnection connect = null;
+		URL url = null;
+		InputStream in = null;
+		InputStreamReader isr = null;
+		BufferedReader baf = null;
+
+		try{ //概ねの操作で例外処理が必要です。
+			//URLを作成する
+			String adress= URL;
+			url=new URL(adress);//URLを設定
+			// URL接続
+			connect = (HttpURLConnection)url.openConnection();//サイトに接続
+			connect.setRequestMethod("GET");//プロトコルの設定
+			in=connect.getInputStream();//ファイルを開く
+			isr = new InputStreamReader( in,"SJIS");
+			baf = new BufferedReader(isr);
+
+
+			for (int i = 0;i<skipLine;i++){
+				baf.readLine();
+			}
+
+
+			String lineRecord = baf.readLine();
+
+
+			//アクセス拒否された場合の動き
+			if(lineRecord==null){
+				System.out.println("syop");
+				//ちょっとだけ時間に間を置く。連続アクセスするとリジェクトされる。
+				try {
+					Thread.sleep(PROPARTY.SLEEPTIME);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				setUrlCsv(URL,skipLine);
+				return;
+			}
+			netFile.add(lineRecord);
+//			System.out.println(lineRecord);
+			while ((lineRecord = baf.readLine()) != null) {
+//				System.out.println(lineRecord);
+				netFile.add(lineRecord);
+			}
+
+
+
+		}catch(Exception e){
+			//例外処理が発生したら、表示する
+			//			System.out.println("Err =" + e);
+			e.printStackTrace();
+
+			System.out.println("ページがないよ：" + URL);
+		}finally{
+			try {
+				//				URL切断
+				baf.close();
+				isr.close();
+				in.close();//InputStreamを閉じる
+				connect.disconnect();//サイトの接続を切断
+			} catch (IOException e) {
+			}
+		}
+	}
+
+	public List<String> getUrlCsv(){
+		return netFile;
+
+	}
+
+	public void setUrlCsvS(List<String> FILE){
+//		System.out.println(FILE.get(0));
+		netFileS.add(FILE);
+	}
+
+	public List<List<String>> getUrlCsvS(){
+		return netFileS;
+	}
+
+
+
 	public void takeCSV(){
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-		calendar.add(Calendar.DAY_OF_MONTH, -10000);
-
+		calendar.add(Calendar.DAY_OF_MONTH, 0);
+		calendar.set(2006, 4, 14);
+		System.out.println(Calendar.DAY_OF_MONTH);
 		System.out.println(sdf1.format(calendar.getTime()));
 
 	}
