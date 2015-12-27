@@ -257,14 +257,14 @@ public class TAB_test extends JPanel {
 			//コードリストテーブルを作る、日々の更新をする。
 
 			s.getCon();
-			CB.everyDayBottonContoroll_STATISTICS (controllDay.getMAX_DD_STATISTICS(s) 		 ,
-												   controllDay.getAJUSTMAXDAY_STATISTICS (s) ,
-												   s											);
-			CB.everyDayBottonContoroll_STOCK_INDEX(controllDay.getMAX_DD_STOCK_INDEX(s) 	 ,
-												   controllDay.getAJUSTMAXDAY_STOCK_INDEX(s) ,
-												   s											);
+//			CB.everyDayBottonContoroll_STATISTICS (controllDay.getMAX_DD_STATISTICS(s) 		 ,
+//												   controllDay.getAJUSTMAXDAY_STATISTICS (s) ,
+//												   s											);
+//			CB.everyDayBottonContoroll_STOCK_INDEX(controllDay.getMAX_DD_STOCK_INDEX(s) 	 ,
+//												   controllDay.getAJUSTMAXDAY_STOCK_INDEX(s) ,
+//												   s											);
 
-			System.out.println();
+			System.out.println(controllDay.getMAX_DD_STOCK_INDEX(s));
 			System.out.println();
 
 			s.closeConection();
