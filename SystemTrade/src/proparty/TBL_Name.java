@@ -13,6 +13,7 @@ public class TBL_Name {
 	public static String TAIL_DAY        = "_DD";
 	public static String TAIL_HOUR       = "_HH";
 	public static String TAIL_5Minite    = "_5M";
+	public static String TAIL_Accessories   = "_AC";
 
 	private static List<String> codeNewList = new ArrayList<String>(); //コードリストテーブルのうち、日付の新しいものをとる。
 	private static List<String> codeAllList = new ArrayList<String>();

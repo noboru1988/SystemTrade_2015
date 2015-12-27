@@ -1,14 +1,39 @@
 package controller;
 
+import insertPackage.InsertDay;
 import insertPackage.InsertStock;
 
 import java.util.List;
 
+import netConnect.NC_Controller;
 import netConnect.NetBean;
 import proparty.S;
+import bean.Bean_Bean;
 import bean.Bean_TBLRecord;
 
 public class GetTimeSeries {
+	InsertDay I_D = new InsertDay();
+
+	//codelisttblをもとに時系列データを各テーブルに挿入する。
+	public void updateTodayDD_STOCK_INDEX(String URL,String TODAY,String MAXDAY,int skipLine,S s){
+		NC_Controller NC_Con = new NC_Controller();
+		Bean_Bean B_B = new Bean_Bean();
+
+		//CSVファイルを一定期間文、取得する。
+		NC_Con.setNC_ConUrlCsvS_STOCK_INDEX(URL, TODAY, MAXDAY, skipLine);
+
+		//取得したCSVファイルをループさせる。。
+		for (int i =0;0<NC_Con.getNC_ConUrlCsvS_STOCK_INDEX().size();i++){
+			//取得したCSVファイル１つをDTOに変換する。＝一行ごとにDTOに格納する。
+			B_B.setList_CSVtoDTO_STOCK_INDEX(NC_Con.getNC_ConUrlCsvS_STOCK_INDEX().get(i), skipLine);
+			//インサートする
+			I_D.InsertDD(B_B.getList_CSVtoDTO_STOCK_INDEX(), s);
+
+			//テスト用の行,、日付を取得する。
+			System.out.println(B_B.getList_CSVtoDTO_STOCK_INDEX().get(i).getDay());
+
+		}
+	}
 
 	//codelisttblをもとに時系列データを各テーブルに挿入する。
 	public void getTimeSeries_DD(){

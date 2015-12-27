@@ -12,11 +12,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import netConnect.NC_Controller;
 import netConnect.NetBean;
+import proparty.S;
+import proparty.controllDay;
 import SQLMETHOD.TESTSQL;
+import bean.Bean_Bean;
 
 import common.commonAP;
 
+import controller.CONTOLLBOTTON;
 import controller.Create;
 import controller.GetCodeList;
 import controller.GetTimeSeries;
@@ -36,6 +41,11 @@ public class TAB_test extends JPanel {
 	private final Action action_2 = new SwingAction_2();
 	private final Action action_3 = new SwingAction_3();
 	private final Action action_4 = new SwingAction_4();
+	private final Action action_5 = new SwingAction_5();
+	private final Action action_6 = new SwingAction_6();
+	private final Action action_7 = new SwingAction_7();
+	private final Action action_8 = new SwingAction_8();
+	private final Action action_9 = new SwingAction_9();
 	private JButton btnNewButton_1;
 	private JButton btnNewButton_2;
 
@@ -86,17 +96,62 @@ public class TAB_test extends JPanel {
 			}
 		});
 		btnNewButton_1.setAction(action_3);
-		btnNewButton_1.setBounds(409, 37, 119, 27);
+		btnNewButton_1.setBounds(360, 37, 168, 27);
 		add(btnNewButton_1);
 
-		btnNewButton_2 = new JButton("テーブル作成");
+		btnNewButton_2 = new JButton("リスト挿入");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		btnNewButton_2.setAction(action_4);
-		btnNewButton_2.setBounds(409, 80, 119, 27);
+		btnNewButton_2.setBounds(360, 80, 168, 27);
 		add(btnNewButton_2);
+
+		JButton btnNewButton_3 = new JButton("テーブル作成");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_3.setAction(action_5);
+		btnNewButton_3.setBounds(545, 37, 155, 27);
+		add(btnNewButton_3);
+
+		JButton btnNewButton_4 = new JButton("New button");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_4.setAction(action_6);
+		btnNewButton_4.setBounds(545, 80, 155, 27);
+		add(btnNewButton_4);
+
+		JButton btnNewButton_5 = new JButton("New button");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_5.setAction(action_7);
+		btnNewButton_5.setBounds(372, 138, 156, 27);
+		add(btnNewButton_5);
+
+		JButton btnNewButton_6 = new JButton("New button");
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_6.setAction(action_8);
+		btnNewButton_6.setBounds(545, 122, 155, 27);
+		add(btnNewButton_6);
+
+		JButton btnNewButton_7 = new JButton("New button");
+		btnNewButton_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_7.setAction(action_9);
+		btnNewButton_7.setBounds(581, 177, 155, 27);
+		add(btnNewButton_7);
 
 
 
@@ -119,12 +174,22 @@ public class TAB_test extends JPanel {
 
 			GetCodeList a = new GetCodeList();
 			NetBean NB = new NetBean();
-			NB.takeCSV();
+			NC_Controller NC_Con = new NC_Controller();
+//			NB.takeCSV();
 			commonAP cAP = new commonAP();
-			System.out.println( cAP.checkDay("2015-11-30","2015-11-30"));
-			System.out.println( cAP.checkDay("2015-11-29","2015-11-30"));
-			System.out.println( cAP.checkDay("2015-11-31","2015-11-30"));
-			System.out.println( cAP.checkDay("2016-11-31","2015-15-30"));
+//			NC_Con.setNC_ConUrlCsvS_STOCK_INDEX("http://k-db.com/?p=all&download=csv&date=", "2015-11-27", "2015-11-18",0);
+//			NC_Con.setNC_ConUrlCsvS_STATISTICS("2015-11-27", "2015-11-18",0);
+			NB.setUrlCsv("http://k-db.com/?p=all&download=csv", 2);
+			Bean_Bean bbb = new Bean_Bean();
+//			bbb.setList_CSVtoDTO_STOCK_INDEX(NB.getUrlCsv());
+//			bbb.getList_CSVtoDTO_STOCK_INDEX();
+			int p = 4149;
+			System.out.println(bbb.getList_CSVtoDTO_STOCK_INDEX().get(p).getCode());
+			System.out.println(bbb.getList_CSVtoDTO_STOCK_INDEX().get(p).getCodeName());
+			System.out.println(bbb.getList_CSVtoDTO_STOCK_INDEX().get(p).getMarket());
+			System.out.println(bbb.getList_CSVtoDTO_STOCK_INDEX().get(p).getCategory());
+			System.out.println(bbb.getList_CSVtoDTO_STOCK_INDEX().get(p).getCateflg());
+
 			for(int i=0;i<100;i++){
 
 			}
@@ -180,34 +245,102 @@ public class TAB_test extends JPanel {
 
 	private class SwingAction_3 extends AbstractAction {
 		public SwingAction_3() {
-			putValue(NAME, "一覧作成");
+			putValue(NAME, "一覧TBL&DB作成_毎日");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			Create aa = new Create();
+
 			GetCodeList a = new GetCodeList();
-			//コードリストテーブルを作る
-			aa.createCodeTBL();
+			CONTOLLBOTTON CB = new CONTOLLBOTTON();
+			long start = System.currentTimeMillis();
+			S s = new S();
+			//コードリストテーブルを作る、日々の更新をする。
 
-			a.controllGetStockList();
+			s.getCon();
+			CB.everyDayBottonContoroll_STATISTICS (controllDay.getMAX_DD_STATISTICS(s) 		 ,
+												   controllDay.getAJUSTMAXDAY_STATISTICS (s) ,
+												   s											);
+			CB.everyDayBottonContoroll_STOCK_INDEX(controllDay.getMAX_DD_STOCK_INDEX(s) 	 ,
+												   controllDay.getAJUSTMAXDAY_STOCK_INDEX(s) ,
+												   s											);
 
-			a.controllGetFutureList();
-			a.controllGetIndexList();
-			a.controllGetStatisticalList();
+			System.out.println();
+			System.out.println();
+
+			s.closeConection();
+
+			long stop = System.currentTimeMillis();
+		    System.out.println("実行にかかった時間は " + (stop - start) + " ミリ秒です。");
 
 		}
 	}
 
 	private class SwingAction_4 extends AbstractAction {
 		public SwingAction_4() {
+			putValue(NAME, "セットアップ");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			GetCodeList GC = new GetCodeList();
+			Create aa = new Create();
+			aa.createDB_CodeTBL();
+//			GC.controllCreateDB_GetList();
+
+		}
+	}
+
+	private class SwingAction_5 extends AbstractAction {
+		public SwingAction_5() {
 			putValue(NAME, "テーブル作成");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
 
-			Create aa = new Create();
-//			//証券とETFテーブルを作る
-			aa.createTimeSereisTBL_DD();
+			System.out.println("a");
+		}
+	}
+
+	private class SwingAction_6 extends AbstractAction {
+		public SwingAction_6() {
+			putValue(NAME, "テーブル作成ああ");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+
+			System.out.println("b");
+		}
+	}
+
+	private class SwingAction_7 extends AbstractAction {
+		public SwingAction_7() {
+			putValue(NAME, "テーブル作成あ");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+
+			System.out.println("c");
+		}
+	}
+
+	private class SwingAction_8 extends AbstractAction {
+		public SwingAction_8() {
+			putValue(NAME, "テーブル作成あ");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+
+			System.out.println("d");
+		}
+	}
+
+	private class SwingAction_9 extends AbstractAction {
+		public SwingAction_9() {
+			putValue(NAME, "テーブル作成あ");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+
+			System.out.println("e");
 		}
 	}
 }

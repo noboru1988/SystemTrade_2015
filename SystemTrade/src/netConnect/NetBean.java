@@ -68,11 +68,11 @@ public class NetBean extends NetSuper{
 
 
 			String lineRecord = baf.readLine();
-
+			System.out.println("一行目：" + lineRecord);
 
 			//アクセス拒否された場合の動き
 			if(lineRecord==null){
-				System.out.println("syop");
+				System.out.println("NetBean：アクセス拒否中。150秒待ちます。");
 				//ちょっとだけ時間に間を置く。連続アクセスするとリジェクトされる。
 				try {
 					Thread.sleep(PROPARTY.SLEEPTIME);
@@ -82,7 +82,19 @@ public class NetBean extends NetSuper{
 				}
 				setUrlCsv(URL,skipLine);
 				return;
+			}else if(lineRecord.equals(PROPARTY.NAZO)){
+				System.out.println("NetBean：503かも。5秒待まってもう一回。");
+				try {
+					Thread.sleep(PROPARTY.SLEEPTIME-145000);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				setUrlCsv(URL,skipLine);
+				return;
 			}
+
+
 			netFile.add(lineRecord);
 //			System.out.println(lineRecord);
 			while ((lineRecord = baf.readLine()) != null) {
@@ -95,7 +107,7 @@ public class NetBean extends NetSuper{
 		}catch(Exception e){
 			//例外処理が発生したら、表示する
 			//			System.out.println("Err =" + e);
-			e.printStackTrace();
+//			e.printStackTrace();
 
 			System.out.println("ページがないよ：" + URL);
 		}finally{
@@ -106,6 +118,8 @@ public class NetBean extends NetSuper{
 				in.close();//InputStreamを閉じる
 				connect.disconnect();//サイトの接続を切断
 			} catch (IOException e) {
+				System.out.println("NetBean109でIOEXception");
+				e.printStackTrace();
 			}
 		}
 	}
@@ -129,9 +143,13 @@ public class NetBean extends NetSuper{
 	public void takeCSV(){
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+
+		calendar.set(2006, 0, 14);
 		calendar.add(Calendar.DAY_OF_MONTH, 0);
-		calendar.set(2006, 4, 14);
-		System.out.println(Calendar.DAY_OF_MONTH);
+		System.out.println(sdf1.format(calendar.getTime()));
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		System.out.println(sdf1.format(calendar.getTime()));
+		calendar.add(Calendar.DAY_OF_MONTH, 2);
 		System.out.println(sdf1.format(calendar.getTime()));
 
 	}
@@ -240,7 +258,7 @@ public class NetBean extends NetSuper{
 			 //URL見るとわかる
 			 codeList_Stock_Sprit = codeList_Stock.get(i).split(" ") ;
 
-			 DTO_B_C.setFuture_flg();
+//			 DTO_B_C.setFuture_flg();
 
 			 //ここらへんを変える
 			 DTO_B_C.setCodeName        (codeList_Stock_Sprit[0]);
@@ -271,7 +289,7 @@ public class NetBean extends NetSuper{
 
 			 codeList_Stock_Sprit = codeList_Stock.get(i).split(",") ;
 
-			 DTO_B_C.setStatistical_flg();
+//			 DTO_B_C.setStatistical_flg();
 
 
 			 //ここらへんを変える
@@ -300,7 +318,7 @@ public class NetBean extends NetSuper{
 
 			 codeList_Stock_Sprit = codeList_Stock.get(i).split(",") ;
 
-			 DTO_B_C.setIndex_flg();
+//			 DTO_B_C.setIndex_flg();
 
 
 			 //ここらへんを変える
@@ -333,7 +351,7 @@ public class NetBean extends NetSuper{
 
 			 codeList_Stock_Sprit = codeList_Stock.get(i).split(",") ;
 
-			 DTO_B_C.setCompany_flg ();
+//			 DTO_B_C.setCompany_flg ();
 			 DTO_B_C.setCode        (codeList_Stock_Sprit[0]);
 			 DTO_B_C.setMarket      (codeList_Stock_Sprit[1]);
 			 DTO_B_C.setCodeName    (codeList_Stock_Sprit[2]);

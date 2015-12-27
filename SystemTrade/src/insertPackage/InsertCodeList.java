@@ -69,16 +69,16 @@ public class InsertCodeList extends InsertSuper  {
 		s.setPstmt(SQL);
 
 				try {
-					s.getPstmt().setString(  1, (B_C.getCode()).replaceAll("-","―")   );
-					s.getPstmt().setString(  2,  B_C.getCodeName()                     );
-					s.getPstmt().setString(  3,  B_C.getMarket()                       );
-					s.getPstmt().setString(  4,  B_C.getCategory()                     );
-					s.getPstmt().setString(  5,  B_C.getCompany_flg()                  );
-					s.getPstmt().setString(  6,  B_C.getEtf_flg()                      );
-					s.getPstmt().setString(  7,  B_C.getStatistical_flg()              );
-					s.getPstmt().setString(  8,  B_C.getIndex_flg()                    );
-					s.getPstmt().setString(  9,  B_C.getFuture_flg()                   );
-					s.getPstmt().setString( 10,  B_C.getCurrency_flg()                 );
+//					s.getPstmt().setString(  1, (B_C.getCode()).replaceAll("-","―")   );
+//					s.getPstmt().setString(  2,  B_C.getCodeName()                     );
+//					s.getPstmt().setString(  3,  B_C.getMarket()                       );
+//					s.getPstmt().setString(  4,  B_C.getCategory()                     );
+//					s.getPstmt().setString(  5,  B_C.getCompany_flg()                  );
+//					s.getPstmt().setString(  6,  B_C.getEtf_flg()                      );
+//					s.getPstmt().setString(  7,  B_C.getStatistical_flg()              );
+//					s.getPstmt().setString(  8,  B_C.getIndex_flg()                    );
+//					s.getPstmt().setString(  9,  B_C.getFuture_flg()                   );
+//					s.getPstmt().setString( 10,  B_C.getCurrency_flg()                 );
 
 					s.getPstmt().executeUpdate();
 				} catch (SQLException e) {

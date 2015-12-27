@@ -2,15 +2,20 @@ package controller;
 
 import proparty.S;
 import proparty.TBL_Name;
+import sql.createDB;
 import sql.createTBL;
 
 public class Create {
 	String SQL;
-	public void createCodeTBL(){
+	public void createDB_CodeTBL(){
 
 		createTBL a = new createTBL();
-
+		S s = new S();
+		s.getCon();
+		createDB CDB = new createDB();
+		CDB.CreateDB(s);
 		a.createCodeList();
+		s.closeConection();
 
 	}
 
@@ -26,7 +31,7 @@ public class Create {
 			//DBをつくるので-を―に変換
 			a.dayTable_Stock((TBL_Name.getCodeList_HauhunReplace().get(i)).replace("-", "―"),s);
 		}
-		
+
 		s.closeConection();
 		 long stop = System.currentTimeMillis();
 		    System.out.println("実行にかかった時間は " + (stop - start) + " ミリ秒です。");
