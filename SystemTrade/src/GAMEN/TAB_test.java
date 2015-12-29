@@ -258,12 +258,12 @@ public class TAB_test extends JPanel {
 
 			s.getCon();
 			CB.everyDayBottonContoroll_STATISTICS (controllDay.getMAX_DD_STATISTICS(s) 		 ,
-//												   controllDay.getAJUSTMAXDAY_STATISTICS (s) ,
-												   "2007-01-20",
+												   controllDay.getAJUSTMAXDAY_STATISTICS (s) ,
+//												   "2007-01-20",
 												   s											);
 			CB.everyDayBottonContoroll_STOCK_INDEX(controllDay.getMAX_DD_STOCK_INDEX(s) 	 ,
-//												   controllDay.getAJUSTMAXDAY_STOCK_INDEX(s) ,
-												   "2007-01-20",
+												   controllDay.getAJUSTMAXDAY_STOCK_INDEX(s) ,
+//												   "2007-01-20",
 												   s											);
 
 
