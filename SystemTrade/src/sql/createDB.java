@@ -16,6 +16,7 @@ public class createDB {
 		}finally{
 			try {
 				s.sqlGetter().executeUpdate("CREATE DATABASE kabudata");
+
 			} catch (SQLException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();

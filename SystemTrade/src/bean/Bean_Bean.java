@@ -79,6 +79,7 @@ public class Bean_Bean {
 			Bean_CodeList B_C = new Bean_CodeList();
 			String[] listCSV_SPRIT = listCSV.get(i).split(",");
 
+
 			B_C.setDay					(DAY);
 			B_C.setCode					(listCSV_SPRIT[0]);
 			B_C.setCodeName				(listCSV_SPRIT[0]);
@@ -92,6 +93,7 @@ public class Bean_Bean {
 			B_C.setNoCompare			(listCSV_SPRIT[8]);
 			B_C.setCatelfg("2");
 			B_Cs.add(B_C);
+
 		}
 
 	}
@@ -144,8 +146,12 @@ public class Bean_Bean {
 				B_C.setCatelfg("1");
 			}
 
+			//9468―Oで末尾２文字が"―T"出ない場合のみ、ADDする。
+			//-Tなら―は存在しないようになっている。
+			if(B_C.getCode().lastIndexOf("―") + 2 != B_C.getCode().length() ){
+				B_Cs.add(B_C);
+			}
 
-			B_Cs.add(B_C);
 		}
 
 	}

@@ -13,6 +13,7 @@ public class controllDay {
 
 	static String SQL;
 	static String MAXDAY;
+	static String COMDAY;
 	static String TBLName;
 
 
@@ -23,25 +24,25 @@ public class controllDay {
 		//String"yyyy-mm-dd"できた日付を分割
 		MAXDAY =  getMAX_DD_STATISTICS(s);
 		String[] TODAYMAX_SPRIT = MAXDAY.split("-");
-		String[] TODAY_SPRIT = getTODAY().split("-");
+//		String[] TODAY_SPRIT = getTODAY().split("-");
 
-		int MAX_int = Integer.parseInt(TODAYMAX_SPRIT[0]);
-		int TODAY_int = Integer.parseInt(TODAY_SPRIT[0]);
+//		int MAX_int = Integer.parseInt(TODAYMAX_SPRIT[0]);
+//		int TODAY_int = Integer.parseInt(TODAY_SPRIT[0]);
 
+		calendar.set(Integer.parseInt(TODAYMAX_SPRIT[0]), Integer.parseInt(TODAYMAX_SPRIT[1]) - 1, Integer.parseInt(TODAYMAX_SPRIT[2]));
 		//三年以上更新していない場合、MAX+730日を今日とする。
-		if((TODAY_int-MAX_int)>PROPARTY.HISABISAYEAR){
-			//今日の日付をカレンダーにいれまーす。
-			//月だけ0 ＝ 1月
-			calendar.set(Integer.parseInt(TODAYMAX_SPRIT[0]), Integer.parseInt(TODAYMAX_SPRIT[1]) - 1, Integer.parseInt(TODAYMAX_SPRIT[2]));
+		calendar.add(Calendar.DAY_OF_MONTH, PROPARTY.HISABISADAY_STATISTICS);
+		COMDAY = sdf1.format(calendar.getTime());
 
-			calendar.add(Calendar.DAY_OF_MONTH, PROPARTY.HISABISADAY);
-			MAXDAY = sdf1.format(calendar.getTime());
-			return MAXDAY;
+
+
+		if(COMDAY.compareTo(getTODAY())<=0){
+
+			return COMDAY;
 		}else{
 
-			return MAXDAY;
+			return getTODAY();
 		}
-
 
 	}
 
@@ -50,25 +51,26 @@ public class controllDay {
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		//String"yyyy-mm-dd"できた日付を分割
 		MAXDAY =  getMAX_DD_STOCK_INDEX(s);
+
 		String[] TODAYMAX_SPRIT = MAXDAY.split("-");
-		String[] TODAY_SPRIT = getTODAY().split("-");
+//		String[] TODAY_SPRIT = getTODAY().split("-");
 
-		int MAX_int = Integer.parseInt(TODAYMAX_SPRIT[0]);
-		int TODAY_int = Integer.parseInt(TODAY_SPRIT[0]);
+//		int MAX_int = Integer.parseInt(TODAYMAX_SPRIT[0]);
+//		int TODAY_int = Integer.parseInt(TODAY_SPRIT[0]);
 
+		calendar.set(Integer.parseInt(TODAYMAX_SPRIT[0]), Integer.parseInt(TODAYMAX_SPRIT[1]) - 1, Integer.parseInt(TODAYMAX_SPRIT[2]));
 		//三年以上更新していない場合、MAX+730日を今日とする。
-		if((TODAY_int-MAX_int)>PROPARTY.HISABISAYEAR){
-			//今日の日付をカレンダーにいれまーす。
-			//月だけ0 ＝ 1月
-			calendar.set(Integer.parseInt(TODAYMAX_SPRIT[0]), Integer.parseInt(TODAYMAX_SPRIT[1]) - 1, Integer.parseInt(TODAYMAX_SPRIT[2]));
+		calendar.add(Calendar.DAY_OF_MONTH, PROPARTY.HISABISADAY_STOCK_INDEX);
+		COMDAY = sdf1.format(calendar.getTime());
 
-			calendar.add(Calendar.DAY_OF_MONTH, PROPARTY.HISABISADAY);
-			MAXDAY = sdf1.format(calendar.getTime());
 
-			return MAXDAY;
+
+		if(COMDAY.compareTo(getTODAY())<=0){
+
+			return COMDAY;
 		}else{
 
-			return MAXDAY;
+			return getTODAY();
 		}
 
 	}

@@ -257,15 +257,15 @@ public class TAB_test extends JPanel {
 			//コードリストテーブルを作る、日々の更新をする。
 
 			s.getCon();
-//			CB.everyDayBottonContoroll_STATISTICS (controllDay.getMAX_DD_STATISTICS(s) 		 ,
+			CB.everyDayBottonContoroll_STATISTICS (controllDay.getMAX_DD_STATISTICS(s) 		 ,
 //												   controllDay.getAJUSTMAXDAY_STATISTICS (s) ,
-//												   s											);
-//			CB.everyDayBottonContoroll_STOCK_INDEX(controllDay.getMAX_DD_STOCK_INDEX(s) 	 ,
+												   "2007-01-20",
+												   s											);
+			CB.everyDayBottonContoroll_STOCK_INDEX(controllDay.getMAX_DD_STOCK_INDEX(s) 	 ,
 //												   controllDay.getAJUSTMAXDAY_STOCK_INDEX(s) ,
-//												   s											);
+												   "2007-01-20",
+												   s											);
 
-			System.out.println(controllDay.getMAX_DD_STOCK_INDEX(s));
-			System.out.println();
 
 			s.closeConection();
 
@@ -281,10 +281,15 @@ public class TAB_test extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
+			long start = System.currentTimeMillis();
 			GetCodeList GC = new GetCodeList();
 			Create aa = new Create();
 			aa.createDB_CodeTBL();
 //			GC.controllCreateDB_GetList();
+
+			long stop = System.currentTimeMillis();
+		    System.out.println("実行にかかった時間は " + (stop - start) + " ミリ秒です。");
+
 
 		}
 	}
