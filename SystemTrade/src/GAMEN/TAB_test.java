@@ -259,13 +259,12 @@ public class TAB_test extends JPanel {
 			s.getCon();
 			CB.everyDayBottonContoroll_STATISTICS (controllDay.getMAX_DD_STATISTICS(s) 		 ,
 												   controllDay.getAJUSTMAXDAY_STATISTICS (s) ,
-//												   "2007-01-20",
+//												   "2007-01-15",
 												   s											);
 			CB.everyDayBottonContoroll_STOCK_INDEX(controllDay.getMAX_DD_STOCK_INDEX(s) 	 ,
 												   controllDay.getAJUSTMAXDAY_STOCK_INDEX(s) ,
-//												   "2007-01-20",
+//												   "2007-01-15",
 												   s											);
-
 
 			s.closeConection();
 
@@ -284,7 +283,9 @@ public class TAB_test extends JPanel {
 			long start = System.currentTimeMillis();
 			GetCodeList GC = new GetCodeList();
 			Create aa = new Create();
+
 			aa.createDB_CodeTBL();
+
 //			GC.controllCreateDB_GetList();
 
 			long stop = System.currentTimeMillis();

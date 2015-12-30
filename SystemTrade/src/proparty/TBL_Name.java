@@ -7,13 +7,33 @@ import java.util.List;
 
 public class TBL_Name {
 
-	public static String CODELISTTBL     = "codeListTBL";
 	public static String TAIL_MONTH      = "_MM";
 	public static String TAIL_WEEK       = "_WW";
 	public static String TAIL_DAY        = "_DD";
 	public static String TAIL_HOUR       = "_HH";
 	public static String TAIL_5Minite    = "_5M";
 	public static String TAIL_Accessories   = "_AC";
+
+
+	public static String CODELISTTBL     = "codeListTBL";
+
+	//個別銘柄・・・1
+	//統計・・・2
+	//指数・・・3
+	//ETF・・・4
+	//先物・・・5
+	//通貨・・・6
+	public static String STOCK_DD	     = "STOCK" + TAIL_DAY;
+	public static String INDEX_DD	     = "INDEX" + TAIL_DAY;
+	public static String STATISTICS_DD	 = "statistics" + TAIL_DAY;
+	public static String ETF_DD			 = "ETF" + TAIL_DAY;
+	public static String SAKIMONO_DD	 = "sakimono" + TAIL_DAY;
+	public static String CURRENCY_DD	 = "currency" + TAIL_DAY;
+
+	//更新日管理
+	public static String UPDATE_MANAGE	 = "UPDATE_MANAGE" + TAIL_DAY;
+
+
 
 	private static List<String> codeNewList = new ArrayList<String>(); //コードリストテーブルのうち、日付の新しいものをとる。
 	private static List<String> codeAllList = new ArrayList<String>();

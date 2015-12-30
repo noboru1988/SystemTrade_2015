@@ -13,9 +13,13 @@ public class Create {
 		S s = new S();
 		s.getCon();
 		createDB CDB = new createDB();
-		CDB.CreateDB(s);
-		a.createCodeList();
+		//DBを作るる
+//		CDB.CreateDB(s);
+		//初期テーブルを作る
+		a.createStartTBL(s);
+//		a.createCodeList(s);
 		s.closeConection();
+		
 
 	}
 

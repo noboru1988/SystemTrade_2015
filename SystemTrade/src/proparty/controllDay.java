@@ -76,21 +76,21 @@ public class controllDay {
 	}
 
 	public static void update_STOCK_INDEX(String updateDay,S s){
-		SQL = "update " + TBL_Name.CODELISTTBL
+		SQL = "update " + TBL_Name.UPDATE_MANAGE
 				+ " set "
-				+ COLUMN.CODENAME + " = '" + updateDay + "'"
+				+ COLUMN.KOSIN_DAY + " = '" + updateDay + "'"
 				+ " where "
-				+ COLUMN.CODE + " = '" + ReCord.KOSHINBI_STOCK_INDEX + "'";
+				+ COLUMN.KOSIN + " = '" + ReCord.KOSHINBI_STOCK_INDEX + "'";
 		s.freeUpdateQuery(SQL);
 
 	}
 
 	public static void update_STATISTICS(String updateDay,S s){
-		SQL = "update " + TBL_Name.CODELISTTBL
+		SQL = "update " + TBL_Name.UPDATE_MANAGE
 				+ " set "
-				+ COLUMN.CODENAME + " = '" + updateDay + "'"
+				+ COLUMN.KOSIN_DAY + " = '" + updateDay + "'"
 				+ " where "
-				+ COLUMN.CODE + " = '" + ReCord.KOSHINBI_STATISTICS + "'";
+				+ COLUMN.KOSIN + " = '" + ReCord.KOSHINBI_STATISTICS + "'";
 		s.freeUpdateQuery(SQL);
 	}
 
@@ -109,7 +109,8 @@ public class controllDay {
 
 		//-を―に変える。DBには―で入っている
 
-		SQL = "select " + COLUMN.CODENAME + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CODE + " ='" + ReCord.KOSHINBI_STOCK_INDEX + "'";
+//		SQL = "select " + COLUMN.CODENAME + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CODE + " ='" + ReCord.KOSHINBI_STOCK_INDEX + "'";
+		SQL = "select " + COLUMN.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN.KOSIN + " ='" + ReCord.KOSHINBI_STOCK_INDEX + "'";
 
 		s.setPstmt(SQL);
 
@@ -119,7 +120,7 @@ public class controllDay {
 
 			while (s.p_rs.next()) {
 
-				MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
+				MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.KOSIN_DAY));
 
 			}
 //			System.out.println(TBLName + "のMAX(setMAX_DD_HAIHUN)：" + MAX_HAIHUN);
@@ -138,8 +139,8 @@ public class controllDay {
 
 		//-を―に変える。DBには―で入っている
 
-		SQL = "select " + COLUMN.CODENAME + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CODE + " ='" + ReCord.KOSHINBI_STATISTICS + "'";
-
+//		SQL = "select " + COLUMN.CODENAME + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CODE + " ='" + ReCord.KOSHINBI_STATISTICS + "'";
+		SQL = "select " + COLUMN.KOSIN_DAY + " from " + TBL_Name.UPDATE_MANAGE + " where " + COLUMN.KOSIN + " ='" + ReCord.KOSHINBI_STATISTICS + "'";
 		s.setPstmt(SQL);
 
 		try {
@@ -148,7 +149,7 @@ public class controllDay {
 
 			while (s.p_rs.next()) {
 
-				MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
+				MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.KOSIN_DAY));
 
 			}
 //			System.out.println(TBLName + "のMAX(setMAX_DD_HAIHUN)：" + MAX_HAIHUN);
