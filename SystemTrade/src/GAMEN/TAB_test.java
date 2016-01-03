@@ -12,19 +12,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import netConnect.NC_Controller;
-import netConnect.NetBean;
 import proparty.S;
-import proparty.controllDay;
-import SQLMETHOD.TESTSQL;
-import bean.Bean_Bean;
-
-import common.commonAP;
-
-import controller.CONTOLLBOTTON;
-import controller.Create;
-import controller.GetCodeList;
-import controller.GetTimeSeries;
+import timeSeriesDTO.DayTimeSeries;
+import timeSeriesDTO.DayTimeSeries2;
+import botton.cloringDate;
+import botton.setUp;
 
 //いろいろテストする。
 
@@ -163,64 +155,21 @@ public class TAB_test extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 
-			TESTSQL aaa = new TESTSQL();
+			S s = new S();
+			s.getCon();
 
-//			aaa.testSQL(textField.getText());
-			Create aa = new Create();
-//			createDB DBMAKE  = new createDB();
-//			S s = new S();
-//			DBMAKE.CreateDB(s);
-//			s.closeConection();
 
-			GetCodeList a = new GetCodeList();
-			NetBean NB = new NetBean();
-			NC_Controller NC_Con = new NC_Controller();
-//			NB.takeCSV();
-			commonAP cAP = new commonAP();
-//			NC_Con.setNC_ConUrlCsvS_STOCK_INDEX("http://k-db.com/?p=all&download=csv&date=", "2015-11-27", "2015-11-18",0);
-//			NC_Con.setNC_ConUrlCsvS_STATISTICS("2015-11-27", "2015-11-18",0);
-			NB.setUrlCsv("http://k-db.com/?p=all&download=csv", 2);
-			Bean_Bean bbb = new Bean_Bean();
-//			bbb.setList_CSVtoDTO_STOCK_INDEX(NB.getUrlCsv());
-//			bbb.getList_CSVtoDTO_STOCK_INDEX();
-			int p = 4149;
-			System.out.println(bbb.getList_CSVtoDTO_STOCK_INDEX().get(p).getCode());
-			System.out.println(bbb.getList_CSVtoDTO_STOCK_INDEX().get(p).getCodeName());
-			System.out.println(bbb.getList_CSVtoDTO_STOCK_INDEX().get(p).getMarket());
-			System.out.println(bbb.getList_CSVtoDTO_STOCK_INDEX().get(p).getCategory());
-			System.out.println(bbb.getList_CSVtoDTO_STOCK_INDEX().get(p).getCateflg());
-
-			for(int i=0;i<100;i++){
-
-			}
+			long start = System.currentTimeMillis();
+//			AccesarrySQL AS = new AccesarrySQL();
+//			AS.setString(TBL_Name.STATISTICS_DD,s);
 
 
 
+			long stop = System.currentTimeMillis();
+		    System.out.println("実行にかかった時間は " + (stop - start) + " ミリ秒です。");
 
-//			for(int i = NB.getUrlCsvS().size()-1;i>=0;i--){
-//				System.out.println(NB.getUrlCsvS().get(i).get(0));
-//			}
-
-
-
-
-
-//コードリストテーブルを作る
-//			aa.createCodeTBL();
-
-//			a.controllGetStockList();
-
-//			a.controllGetFutureList();
-//			a.controllGetIndexList();
-//			a.controllGetStatisticalList();
-//			//証券とETFテーブルを作る
-//			aa.createTimeSereisTBL_DD();
-
-//各日々データの取得
-			GetTimeSeries gt = new GetTimeSeries ();
-//			gt.getTimeSeries_DD();
-			//x.codeGetter();
-			textArea_SQLresult.append(textField.getText() + "\n");
+			s.closeConection();
+			textArea_SQLresult.append(textField.getText() + "5\n");
 		}
 	}
 	private class SwingAction_1 extends AbstractAction {
@@ -249,27 +198,8 @@ public class TAB_test extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-
-			GetCodeList a = new GetCodeList();
-			CONTOLLBOTTON CB = new CONTOLLBOTTON();
-			long start = System.currentTimeMillis();
-			S s = new S();
-			//コードリストテーブルを作る、日々の更新をする。
-
-			s.getCon();
-			CB.everyDayBottonContoroll_STATISTICS (controllDay.getMAX_DD_STATISTICS(s) 		 ,
-												   controllDay.getAJUSTMAXDAY_STATISTICS (s) ,
-//												   "2007-01-15",
-												   s											);
-			CB.everyDayBottonContoroll_STOCK_INDEX(controllDay.getMAX_DD_STOCK_INDEX(s) 	 ,
-												   controllDay.getAJUSTMAXDAY_STOCK_INDEX(s) ,
-//												   "2007-01-15",
-												   s											);
-
-			s.closeConection();
-
-			long stop = System.currentTimeMillis();
-		    System.out.println("実行にかかった時間は " + (stop - start) + " ミリ秒です。");
+			cloringDate C_D = new cloringDate();
+			C_D.getDayDate();
 
 		}
 	}
@@ -280,18 +210,8 @@ public class TAB_test extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			long start = System.currentTimeMillis();
-			GetCodeList GC = new GetCodeList();
-			Create aa = new Create();
-
-			aa.createDB_CodeTBL();
-
-//			GC.controllCreateDB_GetList();
-
-			long stop = System.currentTimeMillis();
-		    System.out.println("実行にかかった時間は " + (stop - start) + " ミリ秒です。");
-
-
+			setUp S_U = new setUp();
+			S_U.firstSetUp();
 		}
 	}
 
@@ -330,23 +250,85 @@ public class TAB_test extends JPanel {
 
 	private class SwingAction_8 extends AbstractAction {
 		public SwingAction_8() {
-			putValue(NAME, "テーブル作成あ");
+			putValue(NAME, "実験1");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
+			S s = new S();
+			s.getCon();
+			long start = System.currentTimeMillis();
 
-			System.out.println("d");
+			DayTimeSeries DT = new DayTimeSeries();
+			//個別銘柄・・・1
+			//統計・・・2
+			//指数・・・3
+			//ETF・・・4
+			//先物・・・5
+			//通貨・・・6
+			DT.setCodeDTO_DD("東証1部", "2", s);
+
+			for(int i =0;i<DT.getCodeDTO_DD().size();i++){
+				System.out.println(DT.getCodeDTO_DD().get(i).getDay() + " " + DT.getCodeDTO_DD().get(i).getOpen() + " " + DT.getCodeDTO_DD().get(i).getMax() + " " + DT.getCodeDTO_DD().get(i).getMin() + " " + DT.getCodeDTO_DD().get(i).getClose() + " " + DT.getCodeDTO_DD().get(i).getBayBay() + " " + DT.getCodeDTO_DD().get(i).getDeki());
+			}
+
+
+			s.closeConection();
+
+
+			long stop = System.currentTimeMillis();
+		    System.out.println("実行にかかった時間は " + (stop - start) + " ミリ秒です。");
 		}
 	}
 
 	private class SwingAction_9 extends AbstractAction {
 		public SwingAction_9() {
-			putValue(NAME, "テーブル作成あ");
+			putValue(NAME, "実験2");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
 
-			System.out.println("e");
+			long start = System.currentTimeMillis();
+			S s = new S();
+			s.getCon();
+			//個別銘柄・・・1
+			//統計・・・2
+			//指数・・・3
+			//ETF・・・4
+			//先物・・・5
+			//通貨・・・6
+
+			DayTimeSeries2 D_T = new DayTimeSeries2();
+
+//			D_T.setCodeDTO_DD("1",s);
+//			D_T.setCodeDTO_DD("2",s);
+//			D_T.setCodeDTO_DD("3",s);
+//			D_T.setCodeDTO_DD("4",s);
+//			String CODE = "東証1部";
+//			for(int i = 0;i<D_T.getDTO().get(CODE).size();i++){
+//				System.out.println(CODE + ":" + D_T.getDTO().get(CODE).get(i).getDay());
+//
+//			}
+//
+//			CODE = "I142";
+//			for(int i = 0;i<D_T.getDTO().get(CODE).size();i++){
+//				System.out.println(CODE + ":" + D_T.getDTO().get(CODE).get(i).getDay());
+//
+//			}
+//
+//			CODE = "1305";
+//			for(int i = 0;i<D_T.getDTO().get(CODE).size();i++){
+//				System.out.println(CODE + ":" + D_T.getDTO().get(CODE).get(i).getDay());
+//			}
+
+
+
+//			System.out.println(D_T.getDTO().get("JQグロース").size());
+//			System.out.println(D_T.getDTO().get("東証1部").size());
+			s.closeConection();
+
+
+			long stop = System.currentTimeMillis();
+		    System.out.println("実行にかかった時間は " + (stop - start) + " ミリ秒です。");
 		}
 	}
 }

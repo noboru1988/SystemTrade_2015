@@ -322,6 +322,10 @@ public class COLUMN {
 	//更新内容
 	public static String KOSIN_DAY												= " KOSIN_DAY ";
 	public static String KOSIN_DAY_KATA	 										= KOSIN_DAY + " varchar(30) ";
+	//株式の分割処理の終了フラグ
+	public static String SEPA_FLG												= " SEPA_FLG ";
+	public static String SEPA_FLG_KATA											= SEPA_FLG + " tinyint(1) ";
+
 
 
 }

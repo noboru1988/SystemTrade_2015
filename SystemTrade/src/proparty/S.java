@@ -10,6 +10,8 @@ import java.sql.Statement;
 public class S {
 	public static Connection con = null;
 	public static ResultSet rs = null;
+	public static ResultSet rs2 = null;
+	public static ResultSet rs3 = null;
 	public static ResultSet p_rs = null;
 	public static Statement stmt = null;
 	public static PreparedStatement pstmt = null;
@@ -23,6 +25,12 @@ public class S {
 //			e.printStackTrace();
 //		}
 //	}
+
+	//conを再接続する。大量にSQLを発行するときに、たまに使う。
+	public void resetConnection(){
+		closeConection();
+		getCon();
+	}
 
 	public void getCon(){
 		try {
@@ -135,6 +143,17 @@ public class S {
 			rs.close();
 		} catch (Exception e) {
 		}
+
+		try {
+			rs2.close();
+		} catch (Exception e) {
+		}
+
+		try {
+			rs3.close();
+		} catch (Exception e) {
+		}
+
 
 		try {
 			pstmt.close();

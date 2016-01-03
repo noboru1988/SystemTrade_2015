@@ -146,8 +146,8 @@ public class InsertList {
 		try {
 
 			//もしも指数ならテーブル名とコード(ﾃｨｯｶｰｼﾝﾎﾞﾙ)を同じにする。
-
-			s.getPstmt().setString(  1,  DTO.getCodeName()					  );
+			
+			s.getPstmt().setString(  1,  DTO.getCode()					  );
 			s.getPstmt().setString(  2,  DTO.getCodeName()                     );
 			s.getPstmt().setString(  3,  DTO.getMarket()                       );
 			s.getPstmt().setString(  4,  DTO.getCategory()                     );

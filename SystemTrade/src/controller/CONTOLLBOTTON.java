@@ -31,11 +31,10 @@ public class CONTOLLBOTTON {
 			System.out.println("統計更新なし");
 		}else{
 
-
 			hisabisaDayBottonContoroll_STATISTICS(MAXDAY,TODAY,s);
 
 		}
-
+		s.resetConnection();
 	}
 
 	public void everyDayBottonContoroll_STOCK_INDEX(String MAXDAY ,String TODAY,S s){
@@ -57,7 +56,7 @@ public class CONTOLLBOTTON {
 		}
 
 
-
+		s.resetConnection();
 
 
 	}
@@ -230,6 +229,7 @@ public class CONTOLLBOTTON {
 			e.printStackTrace();
 			return;
 		}
+
 
 		//取得したDTOをリストTBLに挿入する。
 		//取得したDTOをもとに日々テーブルを作る

@@ -2,45 +2,181 @@ package timeSeriesDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import proparty.S;
 import proparty.TBL_Name;
 import bean.Bean_CodeList;
+
+import common.commonAP;
+
 import constant.COLUMN;
 
 public class DayTimeSeries {
-	static String SQL;
+	String SQL;
 	private List<List<Bean_CodeList>> B_Css  = new ArrayList<List<Bean_CodeList>>();
 	private List<Bean_CodeList> B_Cs  = new ArrayList<Bean_CodeList>();
-	
-	static public void setListCode(S s){
-		SQL = "select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL;
-		
-		
+	HashMap<String,List<Bean_CodeList>> map = new HashMap<String,List<Bean_CodeList>>();
+
+
+
+	public void setCodeDTO_DD(String code,String cate,S s){
+
+		B_Cs  = new ArrayList<Bean_CodeList>();
+		//個別銘柄・・・1
+		//統計・・・2
+		//指数・・・3
+		//ETF・・・4
+		//先物・・・5
+		//通貨・・・6
+
+		switch (cate){
+		case "1":
+			setCode1_DD(code,s);
+			break;
+		case "2":
+			setCode2_DD(code,s);
+			break;
+		case "3":
+			setCode3_DD(code,s);
+			break;
+		case "4":
+			setCode4_DD(code,s);
+			break;
+		case "5":
+			setCode5_DD(code,s);
+			break;
+		case "6":
+			setCode6_DD(code,s);
+			break;
+		default:
+			break;
+		}
+
+
+	}
+
+
+	//個別銘柄・・・1
+	//統計・・・2
+	//指数・・・3
+	//ETF・・・4
+	//先物・・・5
+	//通貨・・・6
+	private void setCode1_DD(String code,S s){
+		SQL = "select * from " + TBL_Name.STOCK_DD + " where " + COLUMN.CODE + "= '" + code + "'";
+
+
 		try {
 			s.rs = s.sqlGetter().executeQuery(SQL);
 			while (s.rs.next()) {
 				Bean_CodeList B_C = new Bean_CodeList();
+				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN.DAYTIME	 )		)	);
+				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN.AJUST_OPEN)		)	);
+				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN.AJUST_MAX)		)	);
+				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN.AJUST_MIN)		)	);
+				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN.AJUST_CLOSE)		)	);
+				B_C.setDeki   (s.rs.getString(commonAP.cutBlank(COLUMN.AJUST_DEKI)		)	);
+				B_C.setBaybay (s.rs.getString(commonAP.cutBlank(COLUMN.AJUST_BAYBAY)	)	);
+				B_C.setCatelfg("1");
 				//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
-//				B_Cs.add(B_C);
+				B_Cs.add(B_C);
 			}
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		
-		
-	}
 
-
-	static public void setListCode(String cate,S s){
-		SQL = "select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '" + cate + "'";
 
 	}
 
+	private void setCode2_DD(String code,S s){
+		SQL = "select * from " + TBL_Name.STATISTICS_DD + " where " + COLUMN.CODE + "= '" + code + "'";
 
-	static public void getListCode(S s){
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while (s.rs.next()) {
+				Bean_CodeList B_C = new Bean_CodeList();
+				B_C.setDay		  (s.rs.getString(commonAP.cutBlank(COLUMN.DAYTIME)			)	);
+				B_C.setDeki		  (s.rs.getString(commonAP.cutBlank(COLUMN.DEKI)			)	);
+				B_C.setBaybay	  (s.rs.getString(commonAP.cutBlank(COLUMN.BAYBAY)			)	);
+				B_C.setStockCount (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_NAME_NUM)	)	);
+				B_C.setTakePrice  (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_GETPRICE)	)	);
+				B_C.setUpPrice	  (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_UPSTOCK)	)	);
+				B_C.setNoChange   (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_NOCHANGE)	)	);
+				B_C.setDownPrice  (s.rs.getString(commonAP.cutBlank(COLUMN.STOCK_DOWNSTOCK)	)	);
+				B_C.setCatelfg("2");
 
+
+				//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
+				B_Cs.add(B_C);
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+
+	}
+
+	private void setCode3_DD(String code,S s){
+		SQL = "select * from " + TBL_Name.INDEX_DD + " where " + COLUMN.CODE + "= '" + code + "'";
+		System.out.println(SQL);
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while (s.rs.next()) {
+				Bean_CodeList B_C = new Bean_CodeList();
+				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN.DAYTIME	 )		)	);
+				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN.OPEN)		)	);
+				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN.MAX)		)	);
+				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN.MIN)		)	);
+				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN.CLOSE)		)	);
+				B_C.setCatelfg("3");
+				//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
+				B_Cs.add(B_C);
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+	}
+
+	private void setCode4_DD(String code,S s){
+		SQL = "select * from " + TBL_Name.ETF_DD + " where " + COLUMN.CODE + "= '" + code + "'";
+
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while (s.rs.next()) {
+				Bean_CodeList B_C = new Bean_CodeList();
+				B_C.setDay	  (s.rs.getString(commonAP.cutBlank(COLUMN.DAYTIME	 )		)	);
+				B_C.setOpen   (s.rs.getString(commonAP.cutBlank(COLUMN.OPEN)		)	);
+				B_C.setMax    (s.rs.getString(commonAP.cutBlank(COLUMN.MAX)		)	);
+				B_C.setMin    (s.rs.getString(commonAP.cutBlank(COLUMN.MIN)		)	);
+				B_C.setClose  (s.rs.getString(commonAP.cutBlank(COLUMN.CLOSE)		)	);
+				B_C.setDeki   (s.rs.getString(commonAP.cutBlank(COLUMN.DEKI)		)	);
+				B_C.setBaybay (s.rs.getString(commonAP.cutBlank(COLUMN.BAYBAY)	)	);
+				B_C.setCatelfg("4");
+				//MAXDAY = s.p_rs.getString(commonAP.cutBlank(COLUMN.CODENAME));
+				B_Cs.add(B_C);
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+	}
+
+	private void setCode5_DD(String code,S s){
+		SQL = "select * from " + TBL_Name.SAKIMONO_DD + " where " + COLUMN.CODE + "= '" + code + "'";
+	}
+
+	private void setCode6_DD(String code,S s){
+		SQL = "select * from " + TBL_Name.CURRENCY_DD + " where " + COLUMN.CODE + "= '" + code + "'";
+	}
+
+	public List<Bean_CodeList> getCodeDTO_DD(){
+		return B_Cs;
 	}
 }

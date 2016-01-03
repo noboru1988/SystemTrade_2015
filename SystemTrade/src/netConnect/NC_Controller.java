@@ -80,6 +80,12 @@ public class NC_Controller {
 				NB.setUrlCsvS(NB.getUrlCsv());
 				calendar.add(Calendar.DAY_OF_MONTH, -1);
 				TODAY = sdf1.format(calendar.getTime());
+			}else if(cAP.checkDay(firstDAY, MAXDAY)){
+				NB.setUrlCsvS(NB.getUrlCsv());
+				calendar.add(Calendar.DAY_OF_MONTH, -1);
+				System.out.println("試験的に通ったNC_CON：TODAY" + TODAY + ",firstDAY:" + firstDAY + ",MAXDAY:" + MAXDAY);
+				TODAY = sdf1.format(calendar.getTime());
+
 			}
 
 

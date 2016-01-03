@@ -112,6 +112,7 @@ public class Bean_Bean {
 
 			String[] listCSV_SPRIT = listCSV.get(i).split(",");
 			B_C.setDay			(DAY);
+
 			B_C.setCode			(listCSV_SPRIT[0]);
 			B_C.setCodeName		(listCSV_SPRIT[1]);
 			B_C.setMarket		(listCSV_SPRIT[2]);
@@ -125,20 +126,26 @@ public class Bean_Bean {
 
 			switch(listCSV_SPRIT[3]){
 
-			case "先物":
-				B_C.setCatelfg("5");
-				break;
 
 			case "指数":
 				B_C.setCatelfg("3");
+				B_C.setCategory(listCSV_SPRIT[3]);
+
 				break;
 
 			case "その他":
 				B_C.setCatelfg("4");
+				B_C.setCategory("ETF");
+				break;
+
+			case "先物":
+				B_C.setCatelfg("5");
+				B_C.setCategory(listCSV_SPRIT[3]);
 				break;
 
 			case "統計":
 				B_C.setCatelfg("2");
+				B_C.setCategory(listCSV_SPRIT[3]);
 				break;
 
 			default:

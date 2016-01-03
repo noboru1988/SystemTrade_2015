@@ -15,7 +15,7 @@ public class TBL_Name {
 	public static String TAIL_Accessories   = "_AC";
 
 
-	public static String CODELISTTBL     = "codeListTBL";
+	public static String CODELISTTBL     = "00_codeListTBL";
 
 	//個別銘柄・・・1
 	//統計・・・2
@@ -23,17 +23,16 @@ public class TBL_Name {
 	//ETF・・・4
 	//先物・・・5
 	//通貨・・・6
-	public static String STOCK_DD	     = "STOCK" + TAIL_DAY;
-	public static String INDEX_DD	     = "INDEX" + TAIL_DAY;
-	public static String STATISTICS_DD	 = "statistics" + TAIL_DAY;
-	public static String ETF_DD			 = "ETF" + TAIL_DAY;
-	public static String SAKIMONO_DD	 = "sakimono" + TAIL_DAY;
-	public static String CURRENCY_DD	 = "currency" + TAIL_DAY;
-
+	public static String STOCK_DD	     = "01_STOCK" 			+ TAIL_DAY;
+	public static String STATISTICS_DD	 = "02_statistics"		+ TAIL_DAY;
+	public static String INDEX_DD	     = "03_INDEX"			+ TAIL_DAY;
+	public static String ETF_DD			 = "04_ETF"				+ TAIL_DAY;
+	public static String SAKIMONO_DD	 = "05_sakimono"		+ TAIL_DAY;
+	public static String CURRENCY_DD	 = "06_currency"		+ TAIL_DAY;
 	//更新日管理
-	public static String UPDATE_MANAGE	 = "UPDATE_MANAGE" + TAIL_DAY;
-
-
+	public static String UPDATE_MANAGE	 = "98_UPDATE_MANAGE"	+ TAIL_DAY;
+	//株の分割とか収束を管理するテーブル
+	public static String SEPARATE_DD	 = "99_separate"		+ TAIL_DAY;
 
 	private static List<String> codeNewList = new ArrayList<String>(); //コードリストテーブルのうち、日付の新しいものをとる。
 	private static List<String> codeAllList = new ArrayList<String>();

@@ -37,10 +37,6 @@ public class commonAP {
 		return sdf1.format(calendar.getTime());
 
 
-//		calendar.add(Calendar.DAY_OF_MONTH, 1);
-//		System.out.println(sdf1.format(calendar.getTime()));
-//		calendar.add(Calendar.DAY_OF_MONTH, 2);
-//		System.out.println(sdf1.format(calendar.getTime()));
 	}
 
 	//yyyy-mm-ddで返す
@@ -55,11 +51,6 @@ public class commonAP {
 		calendar.add(Calendar.DAY_OF_MONTH, agoDay);
 		return sdf1.format(calendar.getTime());
 
-
-//		calendar.add(Calendar.DAY_OF_MONTH, 1);
-//		System.out.println(sdf1.format(calendar.getTime()));
-//		calendar.add(Calendar.DAY_OF_MONTH, 2);
-//		System.out.println(sdf1.format(calendar.getTime()));
 	}
 
 }

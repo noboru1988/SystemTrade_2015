@@ -21,8 +21,32 @@ public class createTBL {
 		createCurrency_6_DD(s);
 
 		createKOSHINList(s);
+		createSEPARETE_DD(s);
 
+		createCodeList(s);
 
+	}
+
+	private void createSEPARETE_DD(S s){
+		//SQL全文
+		String SQL;
+		//列名の取得
+		String colum;
+
+		//SQL文の取得
+		String create = "create table ";
+
+		colum = "( "
+				+ COLUMN.CODE_KATA									 + " , " //銘柄名
+				+ COLUMN.DAYTIME_KATA								 + " , " //日付
+				+ COLUMN.AJUSTRATE_KATA								 + " , " //調整レート。仕様はまだ決まっていないが、この値に株価を掛けることで調整したい。
+				+ COLUMN.SEPA_FLG_KATA								 + " , " //分割、収束処理をおえたらここに1を埋める
+				+ "primary key ("
+				+ COLUMN.CODE + " , " +  COLUMN.DAYTIME + ")) ";
+
+		SQL = create + TBL_Name.SEPARATE_DD + colum;
+
+		s.freeUpdateQuery(SQL);
 	}
 
 	//個別銘柄・・・1
@@ -50,7 +74,6 @@ public class createTBL {
 				+ COLUMN.AJUST_CLOSE_KATA							 + " , " //調整後終値
 				+ COLUMN.AJUST_DEKI_KATA							 + " , " //調整後出来高
 				+ COLUMN.AJUST_BAYBAY_KATA							 + " , " //調整後売買代金
-				+ COLUMN.AJUSTRATE_KATA								 + " , " //調整レート。仕様はまだ決まっていないが、この値に株価を掛けることで調整したい。
 				+ COLUMN.STOCK_NUM_KATA								 + " , " //発行済み株式数
 				+ COLUMN.MARKET_CAP_KATA							 + " , " //時価総額
 				+ COLUMN.M_AND_A_FLG_KATA							 + " , " //合併フラグ
@@ -266,13 +289,6 @@ public class createTBL {
 				+ COLUMN.CLOSE_KATA									 + " , " //終値
 				+ COLUMN.DEKI_KATA									 + " , " //出来高
 				+ COLUMN.BAYBAY_KATA								 + " , " //売買代金
-				+ COLUMN.AJUST_OPEN_KATA							 + " , " //調整後始値
-				+ COLUMN.AJUST_MAX_KATA								 + " , " //調整後最高値
-				+ COLUMN.AJUST_MIN_KATA								 + " , " //調整後最安値
-				+ COLUMN.AJUST_CLOSE_KATA							 + " , " //調整後終値
-				+ COLUMN.AJUST_DEKI_KATA							 + " , " //調整後出来高
-				+ COLUMN.AJUST_BAYBAY_KATA							 + " , " //調整後売買代金
-				+ COLUMN.AJUSTRATE_KATA								 + " , " //調整レート。仕様はまだ決まっていないが、この値に株価を掛けることで調整したい。
 				+ COLUMN.STOCK_NUM_KATA								 + " , " //発行済み株式数
 				+ COLUMN.MARKET_CAP_KATA							 + " , " //時価総額
 				+ COLUMN.M_AND_A_FLG_KATA							 + " , " //合併フラグ
@@ -439,7 +455,7 @@ public class createTBL {
 
 	//証券コード一覧を作成する.
 	//列は、コード、業種、更新時刻
-	public void createCodeList(S s){
+	private void createCodeList(S s){
 
 		//SQL全文
 		String SQL;
@@ -471,23 +487,23 @@ public class createTBL {
 		SQL = create + TBL_Name.CODELISTTBL + colum;
 
 		s.freeUpdateQuery(SQL);
-		SQL = "insert into "
-				+ TBL_Name.CODELISTTBL
-				+ " ( " + COLUMN.CODE
-				+ " , "
-				+ COLUMN.CODENAME
-				+ ") values ('" + ReCord.KOSHINBI_STOCK_INDEX + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
-
-		s.freeUpdateQuery(SQL);
-
-		SQL = "insert into "
-				+ TBL_Name.CODELISTTBL
-				+ " ( " + COLUMN.CODE
-				+ " , "
-				+ COLUMN.CODENAME
-				+ ") values ('" + ReCord.KOSHINBI_STATISTICS + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
-
-		s.freeUpdateQuery(SQL);
+//		SQL = "insert into "
+//				+ TBL_Name.CODELISTTBL
+//				+ " ( " + COLUMN.CODE
+//				+ " , "
+//				+ COLUMN.CODENAME
+//				+ ") values ('" + ReCord.KOSHINBI_STOCK_INDEX + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+//
+//		s.freeUpdateQuery(SQL);
+//
+//		SQL = "insert into "
+//				+ TBL_Name.CODELISTTBL
+//				+ " ( " + COLUMN.CODE
+//				+ " , "
+//				+ COLUMN.CODENAME
+//				+ ") values ('" + ReCord.KOSHINBI_STATISTICS + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+//
+//		s.freeUpdateQuery(SQL);
 
 
 	}

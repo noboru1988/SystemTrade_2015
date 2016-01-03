@@ -13,11 +13,18 @@ public class InsertDay {
 	String SQL;
 
 	//CSVsファイルを入れたら各テーブルにインサート開始
+	//Sを使いすぎるとやばくなるのでときどき、クローズして新たにCONする。
 	public void InsertDDs_STOCK_INDEX(List<List<Bean_CodeList>> DTOs , S s){
+
 		for (int i = 0 ; i < DTOs.size() ; i++){
+
 			InsertDD(DTOs.get(i),s);
 			controllDay.update_STOCK_INDEX(DTOs.get(i).get(0).getDay(), s);
 			System.out.println("株更新日：" + DTOs.get(i).get(0).getDay());
+
+//			if(i%100==0){
+				s.resetConnection();
+//			}
 		}
 	}
 
@@ -38,6 +45,7 @@ public class InsertDay {
 		//ETF・・・4
 		//先物・・・5
 		//通貨・・・6
+
 
 		for(int i = DTO.size() - 1; i>=0; i-- ){
 
@@ -104,19 +112,19 @@ public class InsertDay {
 		try {
 			int i = 1;
 			s.getPstmt().setString(  i++,  DTO.getCode()		);
-			s.getPstmt().setString(  i++,  DTO.getDay()		);
+			s.getPstmt().setString(  i++,  DTO.getDay()			);
 			s.getPstmt().setString(  i++,  DTO.getOpen()		);
-			s.getPstmt().setString(  i++,  DTO.getMax()		);
-			s.getPstmt().setString(  i++,  DTO.getMin()		);
+			s.getPstmt().setString(  i++,  DTO.getMax()			);
+			s.getPstmt().setString(  i++,  DTO.getMin()			);
 			s.getPstmt().setString(  i++,  DTO.getClose()		);
 			s.getPstmt().setString(  i++,  DTO.getDeki()		);
-			s.getPstmt().setString(  i++,  DTO.getBayBay()	);
-			s.getPstmt().setString(  i++,  DTO.getMin()		);
-			s.getPstmt().setString(  i++,  DTO.getMax()		);
-			s.getPstmt().setString(  i++,  DTO.getMin()		);
+			s.getPstmt().setString(  i++,  DTO.getBayBay()		);
+			s.getPstmt().setString(  i++,  DTO.getOpen()		);
+			s.getPstmt().setString(  i++,  DTO.getMax()			);
+			s.getPstmt().setString(  i++,  DTO.getMin()			);
 			s.getPstmt().setString(  i++,  DTO.getClose()		);
 			s.getPstmt().setString(  i++,  DTO.getDeki()		);
-			s.getPstmt().setString(  i++,  DTO.getBayBay()	);
+			s.getPstmt().setString(  i++,  DTO.getBayBay()		);
 		} catch (SQLException e1) {
 			// TODO 自動生成された catch ブロック
 			e1.printStackTrace();
@@ -130,8 +138,8 @@ public class InsertDay {
 			// TODO ミスった時の処理
 			//							テーブル重複時の処理
 			if(e.getErrorCode()!=1062){
-				System.out.println("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName() + ":" + DTO.getDay());
-//				e.printStackTrace();
+				System.out.println("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName() + ":" + DTO.getDay() + ":" + DTO.getCateflg());
+				e.printStackTrace();
 
 			}
 		}
@@ -211,10 +219,10 @@ public class InsertDay {
 		try {
 			int i = 1;
 			s.getPstmt().setString(  i++,  DTO.getCode()		);
-			s.getPstmt().setString(  i++,  DTO.getDay()		);
+			s.getPstmt().setString(  i++,  DTO.getDay()			);
 			s.getPstmt().setString(  i++,  DTO.getOpen()		);
-			s.getPstmt().setString(  i++,  DTO.getMax()		);
-			s.getPstmt().setString(  i++,  DTO.getMin()		);
+			s.getPstmt().setString(  i++,  DTO.getMax()			);
+			s.getPstmt().setString(  i++,  DTO.getMin()			);
 			s.getPstmt().setString(  i++,  DTO.getClose()		);
 		} catch (SQLException e1) {
 			// TODO 自動生成された catch ブロック
@@ -250,34 +258,23 @@ public class InsertDay {
 					+ COLUMN.MIN		 	+ " , "
 					+ COLUMN.CLOSE		 	+ " , "
 					+ COLUMN.DEKI 		 	+ " , "
-					+ COLUMN.BAYBAY 	 	+ " , "
-					+ COLUMN.AJUST_OPEN	 	+ " , "
-					+ COLUMN.AJUST_MAX	 	+ " , "
-					+ COLUMN.AJUST_MIN	 	+ " , "
-					+ COLUMN.AJUST_CLOSE 	+ " , "
-					+ COLUMN.AJUST_DEKI  	+ " , "
-					+ COLUMN.AJUST_BAYBAY	+ "   "
+					+ COLUMN.BAYBAY 	 	+ "   "
 					+ " ) "
-					+ "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "values (?,?,?,?,?,?,?,?)";
 
 		s.setPstmt(SQL);
 
 		try {
 			int i = 1;
 			s.getPstmt().setString(  i++,  DTO.getCode()		);
-			s.getPstmt().setString(  i++,  DTO.getDay()		);
+			s.getPstmt().setString(  i++,  DTO.getDay()			);
 			s.getPstmt().setString(  i++,  DTO.getOpen()		);
-			s.getPstmt().setString(  i++,  DTO.getMax()		);
-			s.getPstmt().setString(  i++,  DTO.getMin()		);
+			s.getPstmt().setString(  i++,  DTO.getMax()			);
+			s.getPstmt().setString(  i++,  DTO.getMin()			);
 			s.getPstmt().setString(  i++,  DTO.getClose()		);
 			s.getPstmt().setString(  i++,  DTO.getDeki()		);
-			s.getPstmt().setString(  i++,  DTO.getBayBay()	);
-			s.getPstmt().setString(  i++,  DTO.getMin()		);
-			s.getPstmt().setString(  i++,  DTO.getMax()		);
-			s.getPstmt().setString(  i++,  DTO.getMin()		);
-			s.getPstmt().setString(  i++,  DTO.getClose()		);
-			s.getPstmt().setString(  i++,  DTO.getDeki()		);
-			s.getPstmt().setString(  i++,  DTO.getBayBay()	);
+			s.getPstmt().setString(  i++,  DTO.getBayBay()		);
+
 		} catch (SQLException e1) {
 			// TODO 自動生成された catch ブロック
 			e1.printStackTrace();
@@ -292,7 +289,7 @@ public class InsertDay {
 			//							テーブル重複時の処理
 			if(e.getErrorCode()!=1062){
 				System.out.println("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName() + ":" + DTO.getDay());
-//				e.printStackTrace();
+				e.printStackTrace();
 
 			}
 		}
