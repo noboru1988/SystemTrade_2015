@@ -20,8 +20,11 @@ public class Bean_CodeList {
 	//先物・・・5
 	//通貨・・・6
 
+	private String zenRasio = "0";
 
-//	日付
+
+
+	//	日付
 	private String day = null;
 ////	業種
 //	private String category = null;
@@ -68,7 +71,8 @@ public class Bean_CodeList {
 		return code;
 	}
 	public void setCode(String code) {
-		this.code = code.replaceAll("-T","").replaceAll("-t","").replaceAll("-","―");
+//		this.code = code.replaceAll("-T","").replaceAll("-t","").replaceAll("-","―");
+		this.code = code.replaceAll("-","―");
 	}
 	public String getMarket() {
 		return market;

@@ -1,7 +1,11 @@
 package bean;
 
+import insertPackage.InsertDay;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import proparty.S;
 
 public class Bean_Bean {
 
@@ -18,10 +22,10 @@ public class Bean_Bean {
 	private List<List<List<String>>> netFileSS = new ArrayList<List<List <String>>>();
 
 
-	public void setList_CsvStoDTOS_STATISTICA(List<List<String>> CsvS,int skipLine){
+	public void setList_CsvStoDTOS_STATISTICA(List<List<String>> CsvS,int skipLine,S s){
 		for(int i=0;i<CsvS.size();i++){
 
-				B_Cs = new ArrayList<Bean_CodeList>();
+			B_Cs = new ArrayList<Bean_CodeList>();
 
 			setList_CSVtoDTO_STATISTICA(CsvS.get(i),skipLine);
 
@@ -31,15 +35,21 @@ public class Bean_Bean {
 
 	}
 
-	public void setList_CsvStoDTOS_STATISTICA(List<List<String>> CsvS,int skipLine,boolean judge){
+	public void setList_CsvStoDTOS_STATISTICA(List<List<String>> CsvS,int skipLine,S s,boolean judge){
 		int p = CsvS.size()-1;
+		InsertDay i_d = new InsertDay();
 		for(int i = p ; i >= 0 ; i--){
 
-			B_Cs = new ArrayList<Bean_CodeList>();
 
+			B_Cs = new ArrayList<Bean_CodeList>();
 			setList_CSVtoDTO_STATISTICA(CsvS.get(i),skipLine);
 
-			B_Css.add(getList_CSVtoDTO_STATISTICA());
+			//DTOを入れてインサート開始
+			i_d.InsertDD_STATISTICS(getList_CSVtoDTO_STATISTICA(), s);
+
+			//使用後のDTOは削除する。メモリ節約
+			CsvS.remove(i);
+//			B_Css.add(getList_CSVtoDTO_STATISTICA());
 
 		}
 	}
@@ -49,7 +59,7 @@ public class Bean_Bean {
 	}
 
 
-	public void setList_CsvStoDTOS_STOCK_INDEX(List<List<String>> CsvS,int skipLine){
+	public void setList_CsvStoDTOS_STOCK_INDEX(List<List<String>> CsvS,int skipLine,S s){
 		for(int i=0;i<CsvS.size();i++){
 			B_Cs = new ArrayList<Bean_CodeList>();
 			setList_CSVtoDTO_STOCK_INDEX(CsvS.get(i),skipLine);
@@ -57,13 +67,21 @@ public class Bean_Bean {
 		}
 	}
 
-	public void setList_CsvStoDTOS_STOCK_INDEX(List<List<String>> CsvS,int skipLine,boolean judge){
+	public void setList_CsvStoDTOS_STOCK_INDEX(List<List<String>> CsvS,int skipLine,S s,boolean judge){
 		int p = CsvS.size()-1;
+		InsertDay i_d = new InsertDay();
 		for(int i = p ; i >= 0 ; i--){
 
 			B_Cs = new ArrayList<Bean_CodeList>();
+
 			setList_CSVtoDTO_STOCK_INDEX(CsvS.get(i),skipLine);
-			B_Css.add(getList_CSVtoDTO_STOCK_INDEX());
+
+			//DTOを入れてインサート開始
+			i_d.InsertDD_STOCK_INDEX(getList_CSVtoDTO_STATISTICA(), s);
+
+			//使用後のDTOは削除する。メモリ節約
+			CsvS.remove(i);
+//			B_Css.add(getList_CSVtoDTO_STOCK_INDEX());
 		}
 	}
 
@@ -73,10 +91,11 @@ public class Bean_Bean {
 
 	public void setList_CSVtoDTO_STATISTICA(List<String> listCSV,int skipLine){
 		//2015年12月04日 一行目にこんな感じで日付が入っている。
-
 		String DAY = listCSV.get(0);
+
+		Bean_CodeList B_C = new Bean_CodeList();
 		for(int i = skipLine;i<listCSV.size();i++){
-			Bean_CodeList B_C = new Bean_CodeList();
+			B_C = new Bean_CodeList();
 			String[] listCSV_SPRIT = listCSV.get(i).split(",");
 
 
@@ -94,8 +113,10 @@ public class Bean_Bean {
 			B_C.setCatelfg("2");
 			B_Cs.add(B_C);
 
-		}
 
+
+		}
+		B_C = new Bean_CodeList();
 	}
 
 	public List<Bean_CodeList> getList_CSVtoDTO_STATISTICA(){
@@ -106,9 +127,9 @@ public class Bean_Bean {
 		//一行目に2015-12-04,全銘柄日足,http://k-db.com/ ←こんな感じではいっているので分割する。
 		String[] DAY_SPRIT = listCSV.get(0).split(",");
 		String DAY = DAY_SPRIT[0];
-
+		Bean_CodeList B_C = new Bean_CodeList();
 		for(int i = skipLine;i<listCSV.size();i++){
-			Bean_CodeList B_C = new Bean_CodeList();
+			B_C = new Bean_CodeList();
 
 			String[] listCSV_SPRIT = listCSV.get(i).split(",");
 			B_C.setDay			(DAY);
@@ -155,12 +176,13 @@ public class Bean_Bean {
 
 			//9468―Oで末尾２文字が"―T"出ない場合のみ、ADDする。
 			//-Tなら―は存在しないようになっている。
-			if(B_C.getCode().lastIndexOf("―") + 2 != B_C.getCode().length() ){
-				B_Cs.add(B_C);
-			}
+//			if(B_C.getCode().lastIndexOf("―") + 2 != B_C.getCode().length() ){
+//				B_Cs.add(B_C);
+//			}
+			B_Cs.add(B_C);
 
 		}
-
+		B_C = new Bean_CodeList();
 	}
 
 	public List<Bean_CodeList> getList_CSVtoDTO_STOCK_INDEX(){

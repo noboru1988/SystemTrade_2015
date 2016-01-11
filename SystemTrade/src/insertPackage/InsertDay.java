@@ -14,6 +14,25 @@ public class InsertDay {
 
 	//CSVsファイルを入れたら各テーブルにインサート開始
 	//Sを使いすぎるとやばくなるのでときどき、クローズして新たにCONする。
+	public void InsertDD_STOCK_INDEX(List<Bean_CodeList> DTO , S s){
+
+			InsertDD(DTO,s);
+			controllDay.update_STOCK_INDEX(DTO.get(0).getDay(), s);
+			System.out.println("株更新日：" + DTO.get(0).getDay());
+			s.resetConnection();
+
+	}
+
+	public void InsertDD_STATISTICS(List<Bean_CodeList> DTO , S s){
+
+			InsertDD(DTO,s);
+			controllDay.update_STATISTICS(DTO.get(0).getDay(), s);
+			System.out.println("統計更新日：" + DTO.get(0).getDay());
+
+	}
+
+	//CSVsファイルを入れたら各テーブルにインサート開始
+	//Sを使いすぎるとやばくなるのでときどき、クローズして新たにCONする。
 	public void InsertDDs_STOCK_INDEX(List<List<Bean_CodeList>> DTOs , S s){
 
 		for (int i = 0 ; i < DTOs.size() ; i++){

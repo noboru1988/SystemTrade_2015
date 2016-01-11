@@ -9,6 +9,7 @@ import netConnect.NC_Controller;
 import netConnect.NetBean;
 import proparty.Net_Adress;
 import proparty.S;
+import proparty.controllDay;
 import bean.Bean_Bean;
 import bean.Bean_CodeList;
 
@@ -95,6 +96,9 @@ public class CONTOLLBOTTON {
 		//取得したDTOをもとに日々テーブルを作る
 		//取得したDTOをもとに時系列テーブルにデータを挿入。ただし今日の文だけ
 		InsertList_CreateTBL_DD_InsertDD_TODAY(bbb.getList_CSVtoDTO_STATISTICA(), s);
+		controllDay.update_STATISTICS(bbb.getList_CSVtoDTO_STATISTICA().get(0).getDay(), s);
+		System.out.println("統計更新日：" + bbb.getList_CSVtoDTO_STATISTICA().get(0).getDay());
+
 
 	}
 
@@ -133,7 +137,8 @@ public class CONTOLLBOTTON {
 		//取得したDTOをもとに日々テーブルを作る
 		//取得したDTOをもとに時系列テーブルにデータを挿入。ただし今日の文だけ
 		InsertList_CreateTBL_DD_InsertDD_TODAY(bbb.getList_CSVtoDTO_STOCK_INDEX(), s);
-
+		controllDay.update_STOCK_INDEX(bbb.getList_CSVtoDTO_STOCK_INDEX().get(0).getDay(), s);
+		System.out.println("株更新日：" + bbb.getList_CSVtoDTO_STOCK_INDEX().get(0).getDay());
 
 	}
 
@@ -141,24 +146,33 @@ public class CONTOLLBOTTON {
 	private void insertDD_STATISTICS(String MAXDAY,String TODAY,S s){
 		NC_Controller NC = new NC_Controller();
 		Bean_Bean B_B = new Bean_Bean();
-		InsertDay ID = new InsertDay();
+//		InsertDay ID = new InsertDay();
 		NC.setNC_ConUrlCsvS_STATISTICS(TODAY, MAXDAY, 0);
-		B_B.setList_CsvStoDTOS_STATISTICA(NC.getNC_ConUrlCsvS_STATISTICS(),2,true);
+		B_B.setList_CsvStoDTOS_STATISTICA(NC.getNC_ConUrlCsvS_STATISTICS(),2,s,true);
 
-		ID.InsertDDs_STATISTICS(B_B.getList_CsvStoDTOS_STATISTICA(), s);
+//		ID.InsertDDs_STATISTICS(B_B.getList_CsvStoDTOS_STATISTICA(), s);
+
+//		InsertDay_Controller IDC = new InsertDay_Controller();
+//		IDC.insertDDs_STATISTICS(TODAY, MAXDAY, 0, 2, s);
+//		IDC = new InsertDay_Controller();
 
 	}
 
 	private void insertDD_STOCK_INDEX(String MAXDAY,String TODAY,S s){
 		NC_Controller NC = new NC_Controller();
 		Bean_Bean B_B = new Bean_Bean();
-		InsertDay ID = new InsertDay();
+//		InsertDay ID = new InsertDay();
+
+
 		NC.setNC_ConUrlCsvS_STOCK_INDEX(Net_Adress.STOCK_INDEX_LIST_DATE, TODAY, MAXDAY, 0);
-		B_B.setList_CsvStoDTOS_STOCK_INDEX(NC.getNC_ConUrlCsvS_STOCK_INDEX(),2,true);
+		System.out.println("今から株の更新：insertDD_STOCK_INDEX");
+		B_B.setList_CsvStoDTOS_STOCK_INDEX(NC.getNC_ConUrlCsvS_STOCK_INDEX(),2,s,true);
 
-		ID.InsertDDs_STOCK_INDEX(B_B.getList_CsvStoDTOS_STOCK_INDEX(), s);
+//		ID.InsertDDs_STOCK_INDEX(B_B.getList_CsvStoDTOS_STOCK_INDEX(), s);
 
-
+//		InsertDay_Controller IDC = new InsertDay_Controller();
+//		IDC.insertDDs_STOCK_INDEX(Net_Adress.STOCK_INDEX_LIST_DATE,TODAY, MAXDAY, 0, 2, s);
+//		IDC = new InsertDay_Controller();
 	}
 
 

@@ -11,7 +11,7 @@ public class PROPARTY {
 	//連続アクセスを防ぐﾐﾘ秒数
 	public static int SLEEPTIME = 150000;
 	//最終更新日が1年前なら分割する。
-	public static int HISABISADAY_STOCK_INDEX = 800;
+	public static int HISABISADAY_STOCK_INDEX = 2000;
 	public static int HISABISADAY_STATISTICS  = 3650;
 
 

@@ -2,6 +2,9 @@ package GAMEN;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -13,10 +16,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import proparty.S;
+import proparty.TBL_Name;
 import timeSeriesDTO.DayTimeSeries;
 import timeSeriesDTO.DayTimeSeries2;
+import bean.Bean_CodeList;
 import botton.cloringDate;
 import botton.setUp;
+import constant.CATE_FLG;
 
 //いろいろテストする。
 
@@ -228,23 +234,56 @@ public class TAB_test extends JPanel {
 
 	private class SwingAction_6 extends AbstractAction {
 		public SwingAction_6() {
-			putValue(NAME, "テーブル作成ああ");
+			putValue(NAME, "DTO実験");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
 
-			System.out.println("b");
+			Bean_CodeList b_b = new Bean_CodeList ();
+			CATE_FLG cf = new CATE_FLG();
+			S s = new S();
+			s.getCon();
+			b_b.setOpen("200");
+			cf.testsub(b_b);
+
+			System.out.println(b_b.getOpen());
+
+
+
+
 		}
 	}
 
 	private class SwingAction_7 extends AbstractAction {
 		public SwingAction_7() {
-			putValue(NAME, "テーブル作成あ");
+			putValue(NAME, "試験用テーブル内レコード削除");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
+			S s = new S();
+			s.getCon();
 
-			System.out.println("c");
+			String SQL;
+
+			SQL = "delete from " + TBL_Name.STOCK_DD;
+			s.freeUpdateQuery(SQL);
+
+			SQL = "delete from " + TBL_Name.INDEX_DD;
+			s.freeUpdateQuery(SQL);
+
+			SQL = "delete from " + TBL_Name.ETF_DD;
+			s.freeUpdateQuery(SQL);
+
+			SQL = "delete from " + TBL_Name.STATISTICS_DD;
+			s.freeUpdateQuery(SQL);
+
+			SQL = "delete from " + TBL_Name.UPDATE_MANAGE;
+			s.freeUpdateQuery(SQL);
+
+
+
+
+			s.closeConection();
 		}
 	}
 
@@ -265,10 +304,11 @@ public class TAB_test extends JPanel {
 			//ETF・・・4
 			//先物・・・5
 			//通貨・・・6
-			DT.setCodeDTO_DD("東証1部", "2", s);
+			DT.setCodeDTO_DD("1301―T","2007-01-01","2007-01-09", s);
+
 
 			for(int i =0;i<DT.getCodeDTO_DD().size();i++){
-				System.out.println(DT.getCodeDTO_DD().get(i).getDay() + " " + DT.getCodeDTO_DD().get(i).getOpen() + " " + DT.getCodeDTO_DD().get(i).getMax() + " " + DT.getCodeDTO_DD().get(i).getMin() + " " + DT.getCodeDTO_DD().get(i).getClose() + " " + DT.getCodeDTO_DD().get(i).getBayBay() + " " + DT.getCodeDTO_DD().get(i).getDeki());
+				System.out.println(DT.getCodeDTO_DD().get(i).getDay() + " " + DT.getCodeDTO_DD().get(i).getOpen() + " " + DT.getCodeDTO_DD().get(i).getMax() + " " + DT.getCodeDTO_DD().get(i).getMin() + " " + DT.getCodeDTO_DD().get(i).getClose() + " " + DT.getCodeDTO_DD().get(i).getBayBay() + " " + DT.getCodeDTO_DD().get(i).getDeki() +" フラグ；" +  DT.getCodeDTO_DD().get(i).getCateflg());
 			}
 
 
@@ -298,17 +338,25 @@ public class TAB_test extends JPanel {
 			//通貨・・・6
 
 			DayTimeSeries2 D_T = new DayTimeSeries2();
+			HashMap<String,List<Bean_CodeList>> map = new HashMap<String,List<Bean_CodeList>>();
+			List<Bean_CodeList> B_Cs  = new ArrayList<Bean_CodeList>();
+			List<List<Bean_CodeList>> B_Css  = new ArrayList<List<Bean_CodeList>>();
 
 //			D_T.setCodeDTO_DD("1",s);
-//			D_T.setCodeDTO_DD("2",s);
+//			D_T.setCodeDTO_DD("2","2008-01-01","2012-01-01",s);
+			D_T.setCodeDTO_DD("2",s);
 //			D_T.setCodeDTO_DD("3",s);
 //			D_T.setCodeDTO_DD("4",s);
-//			String CODE = "東証1部";
-//			for(int i = 0;i<D_T.getDTO().get(CODE).size();i++){
-//				System.out.println(CODE + ":" + D_T.getDTO().get(CODE).get(i).getDay());
-//
-//			}
-//
+			String CODE = "東証1部";
+			for(int i = 0;i<D_T.getDTO().get(CODE).size();i++){
+				System.out.println(CODE + ":" + D_T.getDTO().get(CODE).get(i).getDay());
+
+			}
+
+//			map = D_T.getDTO();
+//			B_Cs = D_T.getDTO().get(CODE);
+//			B_Css.add(D_T.getDTO().get(CODE));
+
 //			CODE = "I142";
 //			for(int i = 0;i<D_T.getDTO().get(CODE).size();i++){
 //				System.out.println(CODE + ":" + D_T.getDTO().get(CODE).get(i).getDay());

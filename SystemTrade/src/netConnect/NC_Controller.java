@@ -62,7 +62,7 @@ public class NC_Controller {
 		//今日の日付をカレンダーにいれまーす。
 		//月だけ0 ＝ 1月
 		calendar.set(Integer.parseInt(TODAY_SPRIT[0]), Integer.parseInt(TODAY_SPRIT[1]) - 1, Integer.parseInt(TODAY_SPRIT[2]));
-
+		String DAY;
 		if(cAP.checkDay(TODAY, MAXDAY)){
 
 			NB.setUrlCsv(Net_Adress.STATISTICS_LIST_DD + TODAY + Net_Adress.DOWN_CSV,SkipLine);
@@ -81,15 +81,21 @@ public class NC_Controller {
 				calendar.add(Calendar.DAY_OF_MONTH, -1);
 				TODAY = sdf1.format(calendar.getTime());
 			}else if(cAP.checkDay(firstDAY, MAXDAY)){
-				NB.setUrlCsvS(NB.getUrlCsv());
-				calendar.add(Calendar.DAY_OF_MONTH, -1);
-				System.out.println("試験的に通ったNC_CON：TODAY" + TODAY + ",firstDAY:" + firstDAY + ",MAXDAY:" + MAXDAY);
-				TODAY = sdf1.format(calendar.getTime());
 
+				DAY = NB.getUrlCsv().get(0);
+				DAY = DAY.replaceFirst("年", "-");
+				DAY = DAY.replaceFirst("月", "-");
+				DAY = DAY.replaceFirst("日", "");
+				if(cAP.checkDay(TODAY,DAY )){
+					NB.setUrlCsvS(NB.getUrlCsv());
+					calendar.add(Calendar.DAY_OF_MONTH, -1);
+					System.out.println("試験的に通ったNC_CON：TODAY" + TODAY + ",firstDAY:" + firstDAY + ",MAXDAY:" + MAXDAY + ",DAY:" + DAY);
+					TODAY = sdf1.format(calendar.getTime());
+				}
 			}
 
 
-			String DAY;
+
 
 			while(cAP.checkDay(TODAY, MAXDAY)){
 

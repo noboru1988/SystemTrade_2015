@@ -59,7 +59,8 @@ public class createTBL {
 		//SQL文の取得
 		String create = "create table ";
 
-		colum = "(id MEDIUMINT AUTO_INCREMENT," //ID
+		colum = "("
+//				+ "id MEDIUMINT AUTO_INCREMENT," //ID
 				+ COLUMN.CODE_KATA									 + " , " //銘柄名
 				+ COLUMN.DAYTIME_KATA								 + " , " //日付
 				+ COLUMN.OPEN_KATA									 + " , " //始値
@@ -141,7 +142,7 @@ public class createTBL {
 				+ COLUMN.MIDDLE_MACD_SIGNAL_KATA					 + " , " //中期MACDシグナル線
 				+ COLUMN.LONG_MACD_KATA								 + " , " //長期MACD
 				+ COLUMN.LONGT_MACD_SIGNAL_KATA						 + " , " //長期MACDシグナル線
-				+ "index Idx_day(id)"								 + ","
+//				+ "index Idx_day(id)"								 + ","
 				+ "primary key ("
 				+ COLUMN.CODE + " , " +  COLUMN.DAYTIME + ")) ";
 //				+ "INDEX idx_day( " + COLUMN.DAYTIME				 + "), " //インデックスを日付に貼る
@@ -166,7 +167,8 @@ public class createTBL {
 		//SQL文の取得
 		String create = "create table ";
 
-		colum = "(id MEDIUMINT AUTO_INCREMENT," //ID
+		colum = "("
+//				+ "id MEDIUMINT AUTO_INCREMENT," //ID
 				+ COLUMN.CODE_KATA									 + " , " //銘柄名
 				+ COLUMN.DAYTIME_KATA								 + " , " //日付
 				+ COLUMN.DEKI_KATA									 + " , " //出来高
@@ -185,7 +187,7 @@ public class createTBL {
 				+ COLUMN.STOCK_NOCOMPARE_IDO_SHORT_KATA				 + " , " //変わらず短期移動平均線
 				+ COLUMN.STOCK_NOCOMPARE_IDO_MIDDLE_KATA			 + " , " //変わらず中期移動平均線
 				+ COLUMN.STOCK_NOCOMPARE_IDO_LONG_KATA				 + " , " //変わらず長期移動平均線
-				+ "index Idx_day(id)"								 + ","
+//				+ "index Idx_day(id)"								 + ","
 				+ "primary key ("
 				+ COLUMN.CODE  + " , " +  COLUMN.DAYTIME + ")) ";
 //				+ "INDEX idx_day( " + COLUMN.DAYTIME				 + "), " //インデックスを日付に貼る
@@ -207,7 +209,8 @@ public class createTBL {
 		//SQL文の取得
 		String create = "create table ";
 
-		colum = "(id MEDIUMINT AUTO_INCREMENT," //ID
+		colum = "("
+//				+ "id MEDIUMINT AUTO_INCREMENT," //ID
 				+ COLUMN.CODE_KATA									 + " , " //銘柄名
 				+ COLUMN.DAYTIME_KATA								 + " , " //日付
 				+ COLUMN.OPEN_KATA									 + " , " //始値
@@ -258,7 +261,7 @@ public class createTBL {
 				+ COLUMN.MIDDLE_MACD_SIGNAL_KATA					 + " , " //中期MACDシグナル線
 				+ COLUMN.LONG_MACD_KATA								 + " , " //長期MACD
 				+ COLUMN.LONGT_MACD_SIGNAL_KATA						 + " , " //長期MACDシグナル線
-				+ "index Idx_day(id)"								 + ","
+//				+ "index Idx_day(id)"								 + ","
 				+ "primary key ("
 				+ COLUMN.CODE  + " , " +  COLUMN.DAYTIME + ")) ";
 //				+ "INDEX idx_day( " + COLUMN.DAYTIME				 + "), " //インデックスを日付に貼る
@@ -280,7 +283,8 @@ public class createTBL {
 		//SQL文の取得
 		String create = "create table ";
 
-		colum = "(id MEDIUMINT AUTO_INCREMENT," //ID
+		colum = "("
+//				+ "id MEDIUMINT AUTO_INCREMENT," //ID
 				+ COLUMN.CODE_KATA									 + " , " //銘柄名
 				+ COLUMN.DAYTIME_KATA								 + " , " //日付
 				+ COLUMN.OPEN_KATA									 + " , " //始値
@@ -356,7 +360,7 @@ public class createTBL {
 				+ COLUMN.MIDDLE_MACD_SIGNAL_KATA					 + " , " //中期MACDシグナル線
 				+ COLUMN.LONG_MACD_KATA								 + " , " //長期MACD
 				+ COLUMN.LONGT_MACD_SIGNAL_KATA						 + " , " //長期MACDシグナル線
-				+ "index Idx_day(id)"								 + ","
+//				+ "index Idx_day(id)"								 + ","
 				+ "primary key ("
 				+ COLUMN.CODE  + " , " +  COLUMN.DAYTIME + ")) ";
 //				+ "INDEX idx_day( " + COLUMN.DAYTIME				 + "), " //インデックスを日付に貼る
