@@ -23,6 +23,7 @@ public class controllDay {
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		//String"yyyy-mm-dd"できた日付を分割
 		MAXDAY =  getMAX_DD_STATISTICS(s);
+		
 		String[] TODAYMAX_SPRIT = MAXDAY.split("-");
 //		String[] TODAY_SPRIT = getTODAY().split("-");
 

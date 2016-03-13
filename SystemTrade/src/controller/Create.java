@@ -12,6 +12,7 @@ public class Create {
 		createTBL a = new createTBL();
 		S s = new S();
 		s.getCon();
+
 		createDB CDB = new createDB();
 		//DBを作るる
 //		CDB.CreateDB(s);

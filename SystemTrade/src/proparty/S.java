@@ -12,9 +12,15 @@ public class S {
 	public static ResultSet rs = null;
 	public static ResultSet rs2 = null;
 	public static ResultSet rs3 = null;
+	public static ResultSet rs_IDOHEIKIN_1 = null;
+	public static ResultSet rs_IDOHEIKIN_2 = null;
+	public static ResultSet rs_MACD = null;
+	public static ResultSet rs_MACD_SIGNAL = null;
 	public static ResultSet p_rs = null;
 	public static Statement stmt = null;
+	public static Statement cstmt = null;
 	public static PreparedStatement pstmt = null;
+
 
 //	public S(){
 //		try {
@@ -112,8 +118,6 @@ public class S {
 //	while (S.rs.next()) {
 //	}
 //	S.DBClose();
-
-
 	public static Statement sqlGetter(){
 
 		try {
@@ -138,6 +142,39 @@ public class S {
 	}
 
 
+	//使うときはこんな感じ
+//	S.sqlEditer().executeUpdate("CREATE DATABASE db_User");
+//	S.rs = S.sqlEditer().executeQuery("select * from 9999_dd");
+//	while (S.rs.next()) {
+	//	s.rs.updateDouble("列名",100 );
+	//
+	//	s.rs.updateRow();
+//	}
+//	S.DBClose();
+	public static Statement sqlEditer(){
+
+		try {
+
+			// ３．SQL ステートメント・オブジェクトの作成
+			cstmt = con.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_UPDATABLE);
+
+			return cstmt;
+
+			} catch (SQLException e1) {
+				System.out.println(
+					"SQLException: " + e1.getMessage());
+				System.out.println(
+					"    SQLState: " + e1.getSQLState());
+				System.out.println(
+					" VendorError: " + e1.getErrorCode());
+			} catch (Exception e2) {
+				System.out.println(
+					"Exception: " + e2.getMessage());
+			}
+		return cstmt;
+	}
+
+
 	public static void closeConection(){
 		try {
 			rs.close();
@@ -154,9 +191,13 @@ public class S {
 		} catch (Exception e) {
 		}
 
-
 		try {
 			pstmt.close();
+		} catch (Exception e) {
+		}
+
+		try {
+			cstmt.close();
 		} catch (Exception e) {
 		}
 
@@ -174,6 +215,27 @@ public class S {
 			p_rs.close();
 		} catch (Exception e) {
 		}
+
+//		try {
+//			rs_IDOHEIKIN_1.close();
+//		} catch (SQLException e) {
+//		}
+//
+//		try {
+//			rs_IDOHEIKIN_2.close();
+//		} catch (SQLException e) {
+//		}
+//
+//		try {
+//			rs_MACD.close();
+//		} catch (SQLException e) {
+//		}
+//
+//		try {
+//			rs_MACD_SIGNAL.close();
+//		} catch (SQLException e) {
+//		}
+
 	}
 
 

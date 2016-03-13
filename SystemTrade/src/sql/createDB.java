@@ -15,6 +15,7 @@ public class createDB {
 			e1.printStackTrace();
 		}finally{
 			try {
+
 				s.sqlGetter().executeUpdate("CREATE DATABASE kabudata");
 
 			} catch (SQLException e) {

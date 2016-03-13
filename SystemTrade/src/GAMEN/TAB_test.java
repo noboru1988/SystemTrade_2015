@@ -2,6 +2,7 @@ package GAMEN;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import bean.Bean_CodeList;
 import botton.cloringDate;
 import botton.setUp;
 import constant.CATE_FLG;
+import constant.COLUMN;
 
 //いろいろテストする。
 
@@ -164,15 +166,64 @@ public class TAB_test extends JPanel {
 			S s = new S();
 			s.getCon();
 
+			double a=0;
+//			setIDOHeikinSigma_1_Stock(String code,String dayTime,int term,String targetColomn,int kindSigma,S s)
+//			sigma.setIDOHeikinSigma_1_Stock("1301―T", "2009-09-01", AccesarryParameta.SIGMA_TERM_SHORT, commonAP.cutBlank(COLUMN.CLOSE),AccesarryParameta.SIGMA_SHORT ,s);
+
+//			IH.setIDOHeikinPrice("1301―T","1","2007-01-22",15 ,COLUMN.SHORTIDO,s);
+//			ZH.setZenzituhiMAXMIN("1301―T","2007-01-22","1" ,s);
 
 			long start = System.currentTimeMillis();
-//			AccesarrySQL AS = new AccesarrySQL();
-//			AS.setString(TBL_Name.STATISTICS_DD,s);
+
+			String SQL;
+
+			SQL = "select * from "
+					+ TBL_Name.STOCK_DD;
+
+
+//			getZenzituClose_Stock;
+
+			SQL = "select "
+				+ " * "
+				+ " from "
+				+ TBL_Name.STOCK_DD
+				+ " where "
+				+ COLUMN.DAYTIME
+				+ " < '" + "2009-03-05" + "'"
+				+ " and "
+				+ COLUMN.CODE
+				+ " ='" + "2579―T" + "'"
+				+ " order by "	   + COLUMN.DAYTIME
+				+ " desc ";
+//				+ " limit 1";
+
+			int point=10000;
+
+			for(int i=0;i<point;i++){
+				try {
+					s.rs = s.sqlGetter().executeQuery(SQL);
+					if(s.rs.next()==true){
+					}
+					s.resetConnection();
+				} catch (SQLException e1) {
+					// TODO 自動生成された catch ブロック
+					e1.printStackTrace();
+				}
+			}
+
+
 
 
 
 			long stop = System.currentTimeMillis();
-		    System.out.println("実行にかかった時間は " + (stop - start) + " ミリ秒です。");
+			System.out.println(point + "回:" + " " + (stop - start) + " ミリ秒です。");
+
+
+
+			SQL = "select " + (COLUMN.SHORT_1_H_SIGMA) + " from "
+					+ TBL_Name.STOCK_DD;
+			start = System.currentTimeMillis();
+
 
 			s.closeConection();
 			textArea_SQLresult.append(textField.getText() + "5\n");
@@ -256,7 +307,7 @@ public class TAB_test extends JPanel {
 
 	private class SwingAction_7 extends AbstractAction {
 		public SwingAction_7() {
-			putValue(NAME, "試験用テーブル内レコード削除");
+			putValue(NAME, "レコード削除");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
@@ -343,7 +394,7 @@ public class TAB_test extends JPanel {
 			List<List<Bean_CodeList>> B_Css  = new ArrayList<List<Bean_CodeList>>();
 
 //			D_T.setCodeDTO_DD("1",s);
-//			D_T.setCodeDTO_DD("2","2008-01-01","2012-01-01",s);
+			D_T.setCodeDTO_DD("2","2008-01-01","2012-01-01",s);
 			D_T.setCodeDTO_DD("2",s);
 //			D_T.setCodeDTO_DD("3",s);
 //			D_T.setCodeDTO_DD("4",s);

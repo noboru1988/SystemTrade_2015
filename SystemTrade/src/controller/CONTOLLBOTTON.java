@@ -9,7 +9,6 @@ import netConnect.NC_Controller;
 import netConnect.NetBean;
 import proparty.Net_Adress;
 import proparty.S;
-import proparty.controllDay;
 import bean.Bean_Bean;
 import bean.Bean_CodeList;
 
@@ -96,8 +95,7 @@ public class CONTOLLBOTTON {
 		//取得したDTOをもとに日々テーブルを作る
 		//取得したDTOをもとに時系列テーブルにデータを挿入。ただし今日の文だけ
 		InsertList_CreateTBL_DD_InsertDD_TODAY(bbb.getList_CSVtoDTO_STATISTICA(), s);
-		controllDay.update_STATISTICS(bbb.getList_CSVtoDTO_STATISTICA().get(0).getDay(), s);
-		System.out.println("統計更新日：" + bbb.getList_CSVtoDTO_STATISTICA().get(0).getDay());
+
 
 
 	}
@@ -137,8 +135,7 @@ public class CONTOLLBOTTON {
 		//取得したDTOをもとに日々テーブルを作る
 		//取得したDTOをもとに時系列テーブルにデータを挿入。ただし今日の文だけ
 		InsertList_CreateTBL_DD_InsertDD_TODAY(bbb.getList_CSVtoDTO_STOCK_INDEX(), s);
-		controllDay.update_STOCK_INDEX(bbb.getList_CSVtoDTO_STOCK_INDEX().get(0).getDay(), s);
-		System.out.println("株更新日：" + bbb.getList_CSVtoDTO_STOCK_INDEX().get(0).getDay());
+
 
 	}
 
@@ -271,8 +268,10 @@ public class CONTOLLBOTTON {
 		//取得したDTOをリストTBLに挿入する。
 		//取得したDTOをもとに日々テーブルを作る
 		InsertList_CreateTBL_DD(DTO, s);
+
 		//取得したDTOをもとに時系列テーブルにデータを挿入
-		ID.InsertDD(DTO, s);
+		ID.InsertDD_STOCK_INDEX(DTO, s);
+		
 
 	}
 

@@ -5,7 +5,9 @@ import java.util.List;
 
 import proparty.S;
 import proparty.TBL_Name;
+import proparty.ZenzituEnd;
 import proparty.controllDay;
+import accesarrySQL.ConAccessary;
 import bean.Bean_CodeList;
 import constant.COLUMN;
 
@@ -16,16 +18,18 @@ public class InsertDay {
 	//Sを使いすぎるとやばくなるのでときどき、クローズして新たにCONする。
 	public void InsertDD_STOCK_INDEX(List<Bean_CodeList> DTO , S s){
 
-			InsertDD(DTO,s);
-			controllDay.update_STOCK_INDEX(DTO.get(0).getDay(), s);
-			System.out.println("株更新日：" + DTO.get(0).getDay());
-			s.resetConnection();
+		InsertDD(DTO,s);
+
+		controllDay.update_STOCK_INDEX(DTO.get(0).getDay(), s);
+		System.out.println("株更新日：" + DTO.get(0).getDay());
+
 
 	}
 
 	public void InsertDD_STATISTICS(List<Bean_CodeList> DTO , S s){
 
 			InsertDD(DTO,s);
+
 			controllDay.update_STATISTICS(DTO.get(0).getDay(), s);
 			System.out.println("統計更新日：" + DTO.get(0).getDay());
 
@@ -42,7 +46,7 @@ public class InsertDay {
 			System.out.println("株更新日：" + DTOs.get(i).get(0).getDay());
 
 //			if(i%100==0){
-				s.resetConnection();
+//				s.resetConnection();
 //			}
 		}
 	}
@@ -57,7 +61,8 @@ public class InsertDay {
 
 	//CSVファイルを入れたら各テーブルにインサート開始
 	public void InsertDD(List<Bean_CodeList> DTO , S s){
-
+		//アクセサリ
+//		ConAccessary CA = new ConAccessary();
 		//個別銘柄・・・1
 		//統計・・・2
 		//指数・・・3
@@ -70,22 +75,49 @@ public class InsertDay {
 
 			switch(DTO.get(i).getCateflg()){
 			case "1":
-				InsertDD_case1(DTO.get(i),s);
+
+				//値が存在しない場合、前日の価格を挿入する。
+				if(DTO.get(i).getMax().equals("0")){
+
+					String price = ZenzituEnd.getZenzituClose_Stock(DTO.get(i).getCode(),s);
+					if (!price.equals("0")){
+						//0ではないとき、前日のpriceを全ての値にsetする。
+						DTO.get(i).setOpen (price);
+						DTO.get(i).setMax  (price);
+						DTO.get(i).setMin  (price);
+						DTO.get(i).setClose(price);
+						InsertDD_case1(DTO.get(i),s);
+						ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+//						System.out.println(DTO.get(i).getCode() + ":" + DTO.get(i).getDay());
+						//0のとき＝前日の価格が存在しない。レコードが存在しない。
+						//0の時は何もしない。
+					}
+
+				}else{
+					InsertDD_case1(DTO.get(i),s);
+					ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
+				}
+
 				break;
 			case "2":
 				InsertDD_case2(DTO.get(i),s);
+				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
 			case "3":
 				InsertDD_case3(DTO.get(i),s);
+				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
 			case "4":
 				InsertDD_case4(DTO.get(i),s);
+				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
 			case "5":
 				InsertDD_case5(DTO.get(i),s);
+				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
 			case "6":
 				InsertDD_case6(DTO.get(i),s);
+				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
 			default:
 				System.out.println("なんかよくわからないの来た：" + DTO.get(i).getCode() + ":" + DTO.get(i).getCodeName());
@@ -122,7 +154,8 @@ public class InsertDay {
 					+ COLUMN.AJUST_MIN	 	+ " , "
 					+ COLUMN.AJUST_CLOSE 	+ " , "
 					+ COLUMN.AJUST_DEKI  	+ " , "
-					+ COLUMN.AJUST_BAYBAY	+ "   "
+					+ COLUMN.AJUST_BAYBAY	+ "  "
+
 					+ " ) "
 					+ "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -133,6 +166,7 @@ public class InsertDay {
 			s.getPstmt().setString(  i++,  DTO.getCode()		);
 			s.getPstmt().setString(  i++,  DTO.getDay()			);
 			s.getPstmt().setString(  i++,  DTO.getOpen()		);
+//			s.getPstmt().setString(  i++,  null		);
 			s.getPstmt().setString(  i++,  DTO.getMax()			);
 			s.getPstmt().setString(  i++,  DTO.getMin()			);
 			s.getPstmt().setString(  i++,  DTO.getClose()		);
@@ -144,6 +178,8 @@ public class InsertDay {
 			s.getPstmt().setString(  i++,  DTO.getClose()		);
 			s.getPstmt().setString(  i++,  DTO.getDeki()		);
 			s.getPstmt().setString(  i++,  DTO.getBayBay()		);
+//			s.getPstmt().setString(  i++,  DTO.getMAXMIN()		);
+//			s.getPstmt().setString(  i++,  DTO.getMAXMINRatio()	);
 		} catch (SQLException e1) {
 			// TODO 自動生成された catch ブロック
 			e1.printStackTrace();
@@ -156,6 +192,7 @@ public class InsertDay {
 		} catch (SQLException e) {
 			// TODO ミスった時の処理
 			//							テーブル重複時の処理
+
 			if(e.getErrorCode()!=1062){
 				System.out.println("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName() + ":" + DTO.getDay() + ":" + DTO.getCateflg());
 				e.printStackTrace();
@@ -210,6 +247,7 @@ public class InsertDay {
 		} catch (SQLException e) {
 			// TODO ミスった時の処理
 			//							テーブル重複時の処理
+
 			if(e.getErrorCode()!=1062){
 
 				System.out.println("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName());
@@ -229,7 +267,7 @@ public class InsertDay {
 					+ COLUMN.OPEN	 	 	+ " , "
 					+ COLUMN.MAX	 	 	+ " , "
 					+ COLUMN.MIN		 	+ " , "
-					+ COLUMN.CLOSE		 	+ "   "
+					+ COLUMN.CLOSE		 	+ "  "
 					+ " ) "
 					+ "values (?,?,?,?,?,?)";
 
@@ -277,7 +315,7 @@ public class InsertDay {
 					+ COLUMN.MIN		 	+ " , "
 					+ COLUMN.CLOSE		 	+ " , "
 					+ COLUMN.DEKI 		 	+ " , "
-					+ COLUMN.BAYBAY 	 	+ "   "
+					+ COLUMN.BAYBAY 	 	+ "  "
 					+ " ) "
 					+ "values (?,?,?,?,?,?,?,?)";
 
