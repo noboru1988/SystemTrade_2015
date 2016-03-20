@@ -9,12 +9,12 @@ public class PROPARTY {
 //  集計する年数
 	public static int COLLECTYEAR = 100;
 	//連続アクセスを防ぐﾐﾘ秒数
-	public static int SLEEPTIME = 150000;
-	//ちょっと間をおいてアクセスする。その間の時間
-	public static int INTERVALTIME = 600;
-	//最終更新日が1年前なら分割する。
-	public static int HISABISADAY_STOCK_INDEX = 1000;
-	public static int HISABISADAY_STATISTICS  = 1000;
+	public static int SLEEPTIME = 3600000;
+	//ちょっと間をおいてアクセスする。その間の時間。
+	public static int INTERVALTIME = 1000;
+	//最終更新日が1年前なら分割する。150で23075秒。180で28207一晩ぐらい？
+	public static int HISABISADAY_STOCK_INDEX = 180;
+	public static int HISABISADAY_STATISTICS  = 180;
 
 
 	//503エラー？たまに出るへんなやつ

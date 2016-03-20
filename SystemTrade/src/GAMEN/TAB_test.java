@@ -166,63 +166,26 @@ public class TAB_test extends JPanel {
 			S s = new S();
 			s.getCon();
 
-			double a=0;
-//			setIDOHeikinSigma_1_Stock(String code,String dayTime,int term,String targetColomn,int kindSigma,S s)
-//			sigma.setIDOHeikinSigma_1_Stock("1301―T", "2009-09-01", AccesarryParameta.SIGMA_TERM_SHORT, commonAP.cutBlank(COLUMN.CLOSE),AccesarryParameta.SIGMA_SHORT ,s);
-
-//			IH.setIDOHeikinPrice("1301―T","1","2007-01-22",15 ,COLUMN.SHORTIDO,s);
-//			ZH.setZenzituhiMAXMIN("1301―T","2007-01-22","1" ,s);
-
-			long start = System.currentTimeMillis();
-
 			String SQL;
+			SQL = " select * from " + TBL_Name.STOCK_DD + " where " + COLUMN.CODE + "='1301―T' and " + COLUMN.DAYTIME + "='2007-08-13'";
+			
+			
+			try {
+				s.rs_EDIT = s.sqlEditer().executeQuery(SQL);
 
-			SQL = "select * from "
-					+ TBL_Name.STOCK_DD;
-
-
-//			getZenzituClose_Stock;
-
-			SQL = "select "
-				+ " * "
-				+ " from "
-				+ TBL_Name.STOCK_DD
-				+ " where "
-				+ COLUMN.DAYTIME
-				+ " < '" + "2009-03-05" + "'"
-				+ " and "
-				+ COLUMN.CODE
-				+ " ='" + "2579―T" + "'"
-				+ " order by "	   + COLUMN.DAYTIME
-				+ " desc ";
-//				+ " limit 1";
-
-			int point=10000;
-
-			for(int i=0;i<point;i++){
-				try {
-					s.rs = s.sqlGetter().executeQuery(SQL);
-					if(s.rs.next()==true){
-					}
-					s.resetConnection();
-				} catch (SQLException e1) {
-					// TODO 自動生成された catch ブロック
-					e1.printStackTrace();
+				//trueならレコードが存在する。
+				if(s.rs_EDIT.next()==true){
+					s.rs_EDIT.updateString(COLUMN.OPEN,"9999");
+					s.rs_EDIT.updateRow();
+					s.rs_EDIT.updateDouble(COLUMN.MIN		,1234);
+					s.rs_EDIT.updateRow();
+					System.out.println("a");
 				}
+			} catch (SQLException e1) {
+				// TODO 自動生成された catch ブロック
+				e1.printStackTrace();
 			}
 
-
-
-
-
-			long stop = System.currentTimeMillis();
-			System.out.println(point + "回:" + " " + (stop - start) + " ミリ秒です。");
-
-
-
-			SQL = "select " + (COLUMN.SHORT_1_H_SIGMA) + " from "
-					+ TBL_Name.STOCK_DD;
-			start = System.currentTimeMillis();
 
 
 			s.closeConection();

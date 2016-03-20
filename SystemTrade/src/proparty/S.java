@@ -12,7 +12,7 @@ public class S {
 	public static ResultSet rs = null;
 	public static ResultSet rs2 = null;
 	public static ResultSet rs3 = null;
-	public static ResultSet rs_IDOHEIKIN_1 = null;
+	public static ResultSet rs_EDIT = null;
 	public static ResultSet rs_IDOHEIKIN_2 = null;
 	public static ResultSet rs_MACD = null;
 	public static ResultSet rs_MACD_SIGNAL = null;
@@ -213,6 +213,11 @@ public class S {
 
 		try {
 			p_rs.close();
+		} catch (Exception e) {
+		}
+
+		try {
+			rs_EDIT.close();
 		} catch (Exception e) {
 		}
 

@@ -75,7 +75,7 @@ public class Bean_Bean {
 			B_Cs = new ArrayList<Bean_CodeList>();
 
 			setList_CSVtoDTO_STOCK_INDEX(CsvS.get(i),skipLine);
-			System.out.print("株のCSV変換できた！、インサートする：");
+			System.out.print("株のCSV変換できた！インサートする：" + i + ":");
 			//DTOを入れてインサート開始
 			i_d.InsertDD_STOCK_INDEX(getList_CSVtoDTO_STATISTICA(), s);
 

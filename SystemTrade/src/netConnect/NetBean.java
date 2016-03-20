@@ -139,10 +139,10 @@ public class NetBean extends NetSuper{
 		InputStreamReader isr = null;
 		BufferedReader baf = null;
 
-		try{ 
-			
+		try{
+
 			Thread.sleep(PROPARTY.INTERVALTIME);
-			
+
 			//概ねの操作で例外処理が必要です。
 			//URLを作成する
 			String adress= URL;
@@ -165,7 +165,7 @@ public class NetBean extends NetSuper{
 
 			//アクセス拒否された場合の動き
 			if(lineRecord==null){
-				System.out.println("NetBean：アクセス拒否中。150秒待ちます。");
+				System.out.println("NetBean：アクセス拒否中。" + PROPARTY.SLEEPTIME + "ﾐﾘ秒待ちます。");
 				//ちょっとだけ時間に間を置く。連続アクセスするとリジェクトされる。
 				try {
 					Thread.sleep(PROPARTY.SLEEPTIME);
@@ -176,9 +176,9 @@ public class NetBean extends NetSuper{
 				setUrlCsv(URL,skipLine);
 				return;
 			}else if(lineRecord.equals(PROPARTY.NAZO)){
-				System.out.println("NetBean：503かも。5秒待まってもう一回。");
+				System.out.println("NetBean：503かも。" + PROPARTY.INTERVALTIME + "ﾐﾘ秒待まってもう一回。");
 				try {
-					Thread.sleep(PROPARTY.SLEEPTIME-145000);
+					Thread.sleep(PROPARTY.INTERVALTIME);
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
