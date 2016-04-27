@@ -32,6 +32,15 @@ public class S {
 //		}
 //	}
 
+	//conだけを再接続する。大量にSQLを発行するときに、たまに使う。
+	public void reCon(){
+		try {
+			con.close();
+			getCon();
+		} catch (Exception e) {
+		}
+
+	}
 	//conを再接続する。大量にSQLを発行するときに、たまに使う。
 	public void resetConnection(){
 		closeConection();
@@ -102,10 +111,13 @@ public class S {
 
 //			System.out.println("S:普通のテーブル重複");
 			//同じテーブルが存在した以外のエラーの場合以下を処理する。
+			//1062エラーも一応出す
 			if(e.getErrorCode()!=1050){
 				e.printStackTrace();
 				System.out.println(sql);
+				System.out.println(e.getErrorCode());
 			}
+
 
 
 		}

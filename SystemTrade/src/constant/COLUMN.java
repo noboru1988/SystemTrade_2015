@@ -35,7 +35,16 @@ public class COLUMN {
 
 
 
+
+	//権利付最終売買日
+	public static String DAYTIME_KENRI_LAST									= "dayTime_kenri_last";
+	public static String DAYTIME_KENRI_LAST_KATA							= DAYTIME_KENRI_LAST + " DATE not null ";
+	//権利落ち日
+	public static String DAYTIME_KENRI_OTI									= "dayTime_kenri_oti";
+	public static String DAYTIME_KENRI_OTI_KATA								= DAYTIME_KENRI_OTI + " DATE not null ";
+
 	//各種銘柄のテーブルの列名
+
 	//日付
 	public static String DAYTIME											= "dayTime";
 	public static String DAYTIME_KATA										= DAYTIME + " DATE not null ";
@@ -58,22 +67,22 @@ public class COLUMN {
 	public static String BAYBAY												= "BAYBAY";
 	public static String BAYBAY_KATA										= BAYBAY + " BIGINT unsigned  ";
 	//調整後始値
-	public static String AJUST_OPEN											= "ajust_open";
+	public static String AJUST_OPEN											= "before_open";
 	public static String AJUST_OPEN_KATA									= AJUST_OPEN + " double unsigned  ";
 	//調整後最高値
-	public static String AJUST_MAX											= "ajust_max";
+	public static String AJUST_MAX											= "before_max";
 	public static String AJUST_MAX_KATA										= AJUST_MAX + " double unsigned  ";
 	//調整後最安値
-	public static String AJUST_MIN											= "ajust_min";
+	public static String AJUST_MIN											= "before_min";
 	public static String AJUST_MIN_KATA										= AJUST_MIN + " double unsigned  ";
 	//調整後終値
-	public static String AJUST_CLOSE										= "ajust_close";
+	public static String AJUST_CLOSE										= "before_close";
 	public static String AJUST_CLOSE_KATA									= AJUST_CLOSE + " double unsigned  ";
 	//調整後出来高
-	public static String AJUST_DEKI											= "ajust_DEKI";
+	public static String AJUST_DEKI											= "before_DEKI";
 	public static String AJUST_DEKI_KATA									= AJUST_DEKI + " BIGINT unsigned  ";
 	//調整後売買代金
-	public static String AJUST_BAYBAY										= "ajust_BAYBAY";
+	public static String AJUST_BAYBAY										= "before_BAYBAY";
 	public static String AJUST_BAYBAY_KATA									= AJUST_BAYBAY + " BIGINT unsigned  ";
 	//調整レート。仕様はまだ決まっていないが、この値に株価を掛けることで調整したい。
 	public static String AJUSTRATE											= "ajustRate";
@@ -164,11 +173,20 @@ public class COLUMN {
 	public static String LONGIDO_HEKATU_RATIO_KATA 							= LONGIDO_HEKATU_RATIO + " double ";
 
 	//当日の最高値-最安値
-	public static String MAXMIN = "maxmin";
-	public static String MAXMIN_KATA = MAXMIN + " double ";
-	//（最高値-最安値)/1
-	public static String MAXMINRATIO = "maxminRatio";
-	public static String MAXMINRATIO_KATA = MAXMINRATIO + " double unsigned  ";
+	public static String MAXMIN													= "maxmin";
+	public static String MAXMIN_KATA											= MAXMIN + " double unsigned ";
+	//（最高値-最安値)/1、ひげの長さ、MAX-MINが0のとき注意
+	public static String MAXMINRATIO											= "maxminRatio";
+	public static String MAXMINRATIO_KATA										= MAXMINRATIO + " double unsigned ";
+	//ろうそく足の面積。（終値-始値）
+	public static String CANDLE_AREA											= "candle_area";
+	public static String CANDLE_AREA_KATA										= CANDLE_AREA + " double ";
+	//ひげの長さと比較して、ろうそく足の面積はどの程度か
+	public static String CANDLE_AREA_SCALE										= "candle_area_scale";
+	public static String CANDLE_AREA_SCALE_KATA									= CANDLE_AREA_SCALE + " double ";
+	//窓。前日の終値と今日の始値の差。終値ー始値
+	public static String WINDOW													="window";
+	public static String WINDOW_KATA											= WINDOW + " double ";
 	//出来高前日比
 	public static String DEKI_CHANGERATE = "DEKI_ChangeRate";
 	public static String DEKI_CHANGERATE_KATA = DEKI_CHANGERATE + " double ";
@@ -523,7 +541,12 @@ public class COLUMN {
 	//株式の分割処理の終了フラグ
 	public static String SEPA_FLG												= "SEPA_FLG";
 	public static String SEPA_FLG_KATA											= SEPA_FLG + " tinyint(1) ";
+	//分割/併合の判断。分割の場合はtrue、併合の場合はfalse
+	public static String CHECKSEPA_COMBINE										= "checksepa_combine";
+	public static String CHECKSEPA_COMBINE_KATA									= CHECKSEPA_COMBINE + " tinyint(1) ";
 
-
+	//備考
+	public static String BIKOU													= "bikou";
+	public static String BIKOU_KATA	 											= BIKOU + " varchar(30) ";
 
 }

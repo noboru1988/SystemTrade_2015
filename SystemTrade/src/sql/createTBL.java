@@ -37,15 +37,22 @@ public class createTBL {
 		String create = "create table ";
 
 		colum = "( "
-				+ COLUMN.CODE_KATA									 + " , " //銘柄名
-				+ COLUMN.DAYTIME_KATA								 + " , " //日付
+
+				+ COLUMN.DAYTIME_KENRI_LAST_KATA					+ " , " //権利付最終売買日
+				+ COLUMN.DAYTIME_KENRI_OTI_KATA						+ " , " //権利落ち日
+				+ COLUMN.CODE_KATA									 + " , " //銘柄コード
+				+ COLUMN.CODENAME_KATA								+ " , " //銘柄名
+				+ COLUMN.MARKET_KATA								+ " , " //マーケット、市場
 				+ COLUMN.AJUSTRATE_KATA								 + " , " //調整レート。仕様はまだ決まっていないが、この値に株価を掛けることで調整したい。
-				+ COLUMN.SEPA_FLG_KATA								 + " , " //分割、収束処理をおえたらここに1を埋める
+				+ COLUMN.DAYTIME_KATA								 + " , " //日付、新株式売却可能日
+				+ COLUMN.BIKOU_KATA									 + " , " //備考欄
+				+ COLUMN.SEPA_FLG_KATA								 + " , " //分割、併合処理をおえたらここに1を埋める
+				+ COLUMN.CHECKSEPA_COMBINE_KATA						 + " , " //分割/併合の判断。分割の場合はtrue、併合の場合はfalse
 				+ "primary key ("
 				+ COLUMN.CODE + " , " +  COLUMN.DAYTIME + ")) ";
 
 		SQL = create + TBL_Name.SEPARATE_DD + colum;
-
+		System.out.println(SQL);
 		s.freeUpdateQuery(SQL);
 	}
 
@@ -63,25 +70,28 @@ public class createTBL {
 //				+ "id MEDIUMINT AUTO_INCREMENT," //ID
 				+ COLUMN.CODE_KATA									 + " , " //銘柄名
 				+ COLUMN.DAYTIME_KATA								 + " , " //日付
+
+				+ COLUMN.AJUST_OPEN_KATA							 + " , " //調整前始値
+				+ COLUMN.AJUST_MAX_KATA								 + " , " //調整前最高値
+				+ COLUMN.AJUST_MIN_KATA								 + " , " //調整前最安値
+				+ COLUMN.AJUST_CLOSE_KATA							 + " , " //調整前終値
+				+ COLUMN.AJUST_DEKI_KATA							 + " , " //調整前出来高
+				+ COLUMN.AJUST_BAYBAY_KATA							 + " , " //調整前売買代金
+
 				+ COLUMN.OPEN_KATA									 + " , " //始値
 				+ COLUMN.MAX_KATA									 + " , " //最高値
 				+ COLUMN.MIN_KATA									 + " , " //最安値
 				+ COLUMN.CLOSE_KATA									 + " , " //終値
 				+ COLUMN.DEKI_KATA									 + " , " //出来高
 				+ COLUMN.BAYBAY_KATA								 + " , " //売買代金
-				+ COLUMN.AJUST_OPEN_KATA							 + " , " //調整後始値
-				+ COLUMN.AJUST_MAX_KATA								 + " , " //調整後最高値
-				+ COLUMN.AJUST_MIN_KATA								 + " , " //調整後最安値
-				+ COLUMN.AJUST_CLOSE_KATA							 + " , " //調整後終値
-				+ COLUMN.AJUST_DEKI_KATA							 + " , " //調整後出来高
-				+ COLUMN.AJUST_BAYBAY_KATA							 + " , " //調整後売買代金
+
 				+ COLUMN.STOCK_NUM_KATA								 + " , " //発行済み株式数
 				+ COLUMN.MARKET_CAP_KATA							 + " , " //時価総額
-				+ COLUMN.M_AND_A_FLG_KATA							 + " , " //合併フラグ
-				+ COLUMN.LONG_FLG_KATA								 + " , " //買いフラグ
-				+ COLUMN.SHORT_FLG_KATA								 + " , " //売りフラグ
-				+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
-				+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
+//				+ COLUMN.M_AND_A_FLG_KATA							 + " , " //合併フラグ
+//				+ COLUMN.LONG_FLG_KATA								 + " , " //買いフラグ
+//				+ COLUMN.SHORT_FLG_KATA								 + " , " //売りフラグ
+//				+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
+//				+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
 				+ COLUMN.CHANGE_PRICE_KATA							 + " , " //前日比
 				+ COLUMN.CHANGERATE_KATA							 + " , " //前日比率
 				+ COLUMN.SHORTIDO_KATA								 + " , " //株価短期間移動平均線
@@ -95,6 +105,9 @@ public class createTBL {
 				+ COLUMN.LONGIDO_RATIO_KATA							 + " , " //株価長期間移動平均線前日比率
 				+ COLUMN.MAXMIN_KATA								 + " , " //当日の最高値-最安値
 				+ COLUMN.MAXMINRATIO_KATA							 + " , " //（最高値-最安値)/1
+				+ COLUMN.CANDLE_AREA_KATA							 + " , " //ローソク足の面積
+				+ COLUMN.CANDLE_AREA_SCALE_KATA						 + " , " //ひげの長さと比較したローソク足面積の比率
+				+ COLUMN.WINDOW_KATA								 + " , " //前日の終値-今日の始値
 				+ COLUMN.DEKI_CHANGERATE_KATA						 + " , " //出来高前日比
 				+ COLUMN.DEKI_RATIO_KATA							 + " , " //出来高前日比率
 				+ COLUMN.BAYBAY_CHANGERATE_KATA						 + " , " //売買代金前日比
@@ -299,10 +312,10 @@ public class createTBL {
 				+ COLUMN.MAX_KATA									 + " , " //最高値
 				+ COLUMN.MIN_KATA									 + " , " //最安値
 				+ COLUMN.CLOSE_KATA									 + " , " //終値
-				+ COLUMN.LONG_FLG_KATA								 + " , " //買いフラグ
-				+ COLUMN.SHORT_FLG_KATA								 + " , " //売りフラグ
-				+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
-				+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
+//				+ COLUMN.LONG_FLG_KATA								 + " , " //買いフラグ
+//				+ COLUMN.SHORT_FLG_KATA								 + " , " //売りフラグ
+//				+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
+//				+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
 				+ COLUMN.CHANGE_PRICE_KATA							 + " , " //前日比
 				+ COLUMN.CHANGERATE_KATA							 + " , " //前日比率
 				+ COLUMN.SHORTIDO_KATA								 + " , " //株価短期間移動平均線
@@ -316,6 +329,9 @@ public class createTBL {
 				+ COLUMN.LONGIDO_RATIO_KATA							 + " , " //株価長期間移動平均線前日比率
 				+ COLUMN.MAXMIN_KATA								 + " , " //当日の最高値-最安値
 				+ COLUMN.MAXMINRATIO_KATA							 + " , " //（最高値-最安値)/1
+				+ COLUMN.CANDLE_AREA_KATA							 + " , " //ローソク足の面積
+				+ COLUMN.CANDLE_AREA_SCALE_KATA						 + " , " //ひげの長さと比較したローソク足面積の比率
+				+ COLUMN.WINDOW_KATA								 + " , " //前日の終値-今日の始値
 				+ COLUMN.SHORT_DEV_KATA								 + " , " //短期間の標準偏差（シグマ）
 				+ COLUMN.SHORT_NOW_SIGMA_KATA						 + " , " //短期間内で今日の終値がシグマと比較して何パーセント上か。
 				+ COLUMN.SHORT_1_H_SIGMA_KATA						 + " , " //短期間でのシグマ１
@@ -390,10 +406,10 @@ public class createTBL {
 				//+ COLUMN.STOCK_NUM_KATA								 + " , " //発行済み株式数
 				//+ COLUMN.MARKET_CAP_KATA							 + " , " //時価総額
 				//+ COLUMN.M_AND_A_FLG_KATA							 + " , " //合併フラグ
-				+ COLUMN.LONG_FLG_KATA								 + " , " //買いフラグ
-				+ COLUMN.SHORT_FLG_KATA								 + " , " //売りフラグ
-				+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
-				+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
+//				+ COLUMN.LONG_FLG_KATA								 + " , " //買いフラグ
+//				+ COLUMN.SHORT_FLG_KATA								 + " , " //売りフラグ
+//				+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
+//				+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
 				+ COLUMN.CHANGE_PRICE_KATA							 + " , " //前日比
 				+ COLUMN.CHANGERATE_KATA							 + " , " //前日比率
 				+ COLUMN.SHORTIDO_KATA								 + " , " //株価短期間移動平均線
@@ -407,6 +423,9 @@ public class createTBL {
 				+ COLUMN.LONGIDO_RATIO_KATA							 + " , " //株価長期間移動平均線前日比率
 				+ COLUMN.MAXMIN_KATA								 + " , " //当日の最高値-最安値
 				+ COLUMN.MAXMINRATIO_KATA							 + " , " //（最高値-最安値)/1
+				+ COLUMN.CANDLE_AREA_KATA							 + " , " //ローソク足の面積
+				+ COLUMN.CANDLE_AREA_SCALE_KATA						 + " , " //ひげの長さと比較したローソク足面積の比率
+				+ COLUMN.WINDOW_KATA								 + " , " //前日の終値-今日の始値
 				+ COLUMN.DEKI_CHANGERATE_KATA						 + " , " //出来高前日比
 				+ COLUMN.DEKI_RATIO_KATA							 + " , " //出来高前日比率
 				+ COLUMN.BAYBAY_CHANGERATE_KATA						 + " , " //売買代金前日比
@@ -546,7 +565,16 @@ public class createTBL {
 				+ " ( " + COLUMN.KOSIN
 				+ " , "
 				+ COLUMN.KOSIN_DAY
-				+ ") values ('" + ReCord.KOSHINBI_STOCK_INDEX + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+				+ ") values ('" + ReCord.KOSHINBI_STOCK_ETF + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
+
+		s.freeUpdateQuery(SQL);
+
+		SQL = "insert into "
+				+ TBL_Name.UPDATE_MANAGE
+				+ " ( " + COLUMN.KOSIN
+				+ " , "
+				+ COLUMN.KOSIN_DAY
+				+ ") values ('" + ReCord.KOSHINBI_INDEX + "' , '"+ ReCord.KOSHINBI_SHOKI + "' )  " ;
 
 		s.freeUpdateQuery(SQL);
 
@@ -658,11 +686,11 @@ public class createTBL {
 				+ COLUMN.AJUSTRATE_KATA								 + " , " //調整レート。仕様はまだ決まっていないが、この値に株価を掛けることで調整したい。
 				+ COLUMN.STOCK_NUM_KATA								 + " , " //発行済み株式数
 				+ COLUMN.MARKET_CAP_KATA							 + " , " //時価総額
-				+ COLUMN.M_AND_A_FLG_KATA							 + " , " //合併フラグ
-				+ COLUMN.LONG_FLG_KATA								 + " , " //買いフラグ
-				+ COLUMN.SHORT_FLG_KATA								 + " , " //売りフラグ
-				+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
-				+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
+//				+ COLUMN.M_AND_A_FLG_KATA							 + " , " //合併フラグ
+//				+ COLUMN.LONG_FLG_KATA								 + " , " //買いフラグ
+//				+ COLUMN.SHORT_FLG_KATA								 + " , " //売りフラグ
+//				+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
+//				+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
 				+ COLUMN.CHANGE_PRICE_KATA							 + " , " //前日比
 				+ COLUMN.CHANGERATE_KATA							 + " , " //前日比率
 				+ COLUMN.SHORTIDO_KATA								 + " , " //株価短期間移動平均線
@@ -759,10 +787,10 @@ public class createTBL {
 				+ COLUMN.MAX_KATA									 + " , " //最高値
 				+ COLUMN.MIN_KATA									 + " , " //最安値
 				+ COLUMN.CLOSE_KATA									 + " , " //終値
-				+ COLUMN.LONG_FLG_KATA								 + " , " //買いフラグ
-				+ COLUMN.SHORT_FLG_KATA								 + " , " //売りフラグ
-				+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
-				+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
+//				+ COLUMN.LONG_FLG_KATA								 + " , " //買いフラグ
+//				+ COLUMN.SHORT_FLG_KATA								 + " , " //売りフラグ
+//				+ COLUMN.L_TOTAL_FLG_KATA							 + " , " //買いフラグ合計
+//				+ COLUMN.S_TOTAL_A_FLG_KATA							 + " , " //売りフラグ合計
 				+ COLUMN.CHANGE_PRICE_KATA							 + " , " //前日比
 				+ COLUMN.CHANGERATE_KATA							 + " , " //前日比率
 				+ COLUMN.SHORTIDO_KATA								 + " , " //株価短期間移動平均線

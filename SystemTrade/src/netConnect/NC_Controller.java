@@ -58,19 +58,23 @@ public class NC_Controller {
 
 		//String"yyyy-mm-dd"できた日付を分割
 		String[] TODAY_SPRIT = TODAY.split("-");
-
+		
 		//今日の日付をカレンダーにいれまーす。
 		//月だけ0 ＝ 1月
 		calendar.set(Integer.parseInt(TODAY_SPRIT[0]), Integer.parseInt(TODAY_SPRIT[1]) - 1, Integer.parseInt(TODAY_SPRIT[2]));
 		String DAY;
 		if(cAP.checkDay(TODAY, MAXDAY)){
 
-			NB.setUrlCsv(Net_Adress.STATISTICS_LIST_DD + TODAY + Net_Adress.DOWN_CSV,SkipLine);
-			String firstDAY = NB.getUrlCsv().get(0);
 
-			firstDAY = firstDAY.replaceFirst("年", "-");
-			firstDAY = firstDAY.replaceFirst("月", "-");
-			firstDAY = firstDAY.replaceFirst("日", "");
+			System.out.println("setNC:" + Net_Adress.STATISTICS_LIST_DD + TODAY + Net_Adress.DOWN_CSV);
+
+
+			NB.setUrlCsv(Net_Adress.STATISTICS_LIST_DD + TODAY + Net_Adress.DOWN_CSV,SkipLine);
+			String firstDAY = TODAY;
+			System.out.println(TODAY);
+//			firstDAY = firstDAY.replaceFirst("年", "-");
+//			firstDAY = firstDAY.replaceFirst("月", "-");
+//			firstDAY = firstDAY.replaceFirst("日", "");
 
 
 //			NB.setUrlCsvS(NB.getUrlCsv());

@@ -15,7 +15,7 @@ public class Create {
 
 		createDB CDB = new createDB();
 		//DBを作るる
-//		CDB.CreateDB(s);
+		CDB.CreateDB(s);
 
 		//初期テーブルを作る
 		a.createStartTBL(s);

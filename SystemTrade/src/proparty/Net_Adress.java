@@ -17,12 +17,19 @@ public class Net_Adress {
 //	public static String STATISTICS_LIST = "http://k-db.com/statistics/";
 //	public static String FUTURE_LIST = "http://k-db.com/futures/";
 
-	public static String STOCK_INDEX_LIST = "http://k-db.com/?p=all&download=csv";
-	public static String STATISTICS_LIST = "http://k-db.com/statistics/2015-99-01?download=csv";
+	public static String STOCK_LIST = "http://k-db.com/stocks/?download=csv";
+	public static String INDEX_LIST = "http://k-db.com/indices/?download=csv";
+//	public static String STATISTICS_LIST = "http://k-db.com/statistics/2015-99-01?download=csv";
+	public static String STATISTICS_LIST = "http://k-db.com/statistics/?download=csv";
+
+	public static String STOCK_LIST_DD = "http://k-db.com/stocks/";
+	public static String INDEX_LIST_DD = "http://k-db.com/indices/";
 	public static String STATISTICS_LIST_DD = "http://k-db.com/statistics/";
 
+	//&csvheaderstring=コード,銘柄名,市場,業種,始値,高値,安値,終値,出来高,売買代金
+	public static String DOWN_ITEM_9 = "&csvbodyformat={0},{1},{2},{3},{4},{5},{6},{7},{8},{9}";
 	public static String DOWN_CSV = "?download=csv";
-	public static String STOCK_INDEX_LIST_DATE = "http://k-db.com/?p=all&download=csv&date=";
+	public static String STOCK_LIST_DATE = "http://k-db.com/?p=all&download=csv&date=";
 
 
 

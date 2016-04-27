@@ -213,7 +213,7 @@ public class Bean_CodeList {
 	}
 
 	public void setOpen(String x){
-		x = (x.equals("-")) ? "0" : x;
+		x = (x.equals("")) ? "0" : x;
 		open = x;
 	}
 
@@ -222,7 +222,7 @@ public class Bean_CodeList {
 	}
 
 	public void setMax(String x){
-		x = (x.equals("-")) ? "0" : x;
+		x = (x.equals("")) ? "0" : x;
 		max = x;
 	}
 
@@ -231,7 +231,7 @@ public class Bean_CodeList {
 	}
 
 	public void setMin(String x){
-		x = (x.equals("-")) ? "0" : x;
+		x = (x.equals("")) ? "0" : x;
 		min = x;
 	}
 
@@ -240,7 +240,7 @@ public class Bean_CodeList {
 	}
 
 	public void setClose(String x){
-		x = (x.equals("-")) ? "0" : x;
+		x = (x.equals("")) ? "0" : x;
 		close = x;
 	}
 
@@ -249,7 +249,7 @@ public class Bean_CodeList {
 	}
 
 	public void setDeki(String x){
-		x = (x.equals("-")) ? "0" : x;
+		x = (x.equals("")) ? "0" : x;
 		deki = x;
 	}
 
@@ -258,7 +258,7 @@ public class Bean_CodeList {
 	}
 
 	public void setBaybay(String x){
-		x = (x.equals("-")) ? "0" : x;
+		x = (x.equals("")) ? "0" : x;
 		baybay = x;
 	}
 

@@ -10,28 +10,39 @@ import proparty.controllDay;
 import accesarrySQL.ConAccessary;
 import bean.Bean_CodeList;
 import constant.COLUMN;
+import constant.ReCord;
 
 public class InsertDay {
 	String SQL;
 
 	//CSVsファイルを入れたら各テーブルにインサート開始
 	//Sを使いすぎるとやばくなるのでときどき、クローズして新たにCONする。
-	public void InsertDD_STOCK_INDEX(List<Bean_CodeList> DTO , S s){
+	public void InsertDD_STOCK_ETF(List<Bean_CodeList> DTO ,String DAY, S s){
 
 		InsertDD(DTO,s);
 
-		controllDay.update_STOCK_INDEX(DTO.get(0).getDay(), s);
-		System.out.println("株更新日：" + DTO.get(0).getDay());
+		controllDay.update_STOCK_ETF(DAY, s);
+		System.out.println("株更新日：" + DAY);
 
 
 	}
 
-	public void InsertDD_STATISTICS(List<Bean_CodeList> DTO , S s){
+	public void InsertDD_INDEX(List<Bean_CodeList> DTO ,String DAY, S s){
+
+		InsertDD(DTO,s);
+
+		controllDay.update_INDEX(DAY, s);
+		System.out.println("指数更新日：" + DAY);
+
+
+	}
+
+	public void InsertDD_STATISTICS(List<Bean_CodeList> DTO ,String UPDATEDAY, S s){
 
 			InsertDD(DTO,s);
 
-			controllDay.update_STATISTICS(DTO.get(0).getDay(), s);
-			System.out.println("統計更新日：" + DTO.get(0).getDay());
+			controllDay.update_STATISTICS(UPDATEDAY, s);
+			System.out.println("統計更新日：" + UPDATEDAY);
 
 	}
 
@@ -42,7 +53,7 @@ public class InsertDay {
 		for (int i = 0 ; i < DTOs.size() ; i++){
 
 			InsertDD(DTOs.get(i),s);
-			controllDay.update_STOCK_INDEX(DTOs.get(i).get(0).getDay(), s);
+			controllDay.update_STOCK_ETF(DTOs.get(i).get(0).getDay(), s);
 			System.out.println("株更新日：" + DTOs.get(i).get(0).getDay());
 
 //			if(i%100==0){
@@ -74,7 +85,7 @@ public class InsertDay {
 		for(int i = DTO.size() - 1; i>=0; i-- ){
 
 			switch(DTO.get(i).getCateflg()){
-			case "1":
+			case ReCord.CODE_01_STOCK:
 
 				//値が存在しない場合、前日の価格を挿入する。
 				if(DTO.get(i).getMax().equals("0")){
@@ -99,23 +110,23 @@ public class InsertDay {
 				}
 
 				break;
-			case "2":
+			case ReCord.CODE_02_SATISTICS:
 				InsertDD_case2(DTO.get(i),s);
 				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
-			case "3":
+			case ReCord.CODE_03_INDEX:
 				InsertDD_case3(DTO.get(i),s);
 				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
-			case "4":
+			case ReCord.CODE_04_ETF:
 				InsertDD_case4(DTO.get(i),s);
 				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
-			case "5":
+			case ReCord.CODE_05_SAKIMONO:
 				InsertDD_case5(DTO.get(i),s);
 				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
-			case "6":
+			case ReCord.CODE_06_CURRENCY:
 				InsertDD_case6(DTO.get(i),s);
 				ConAccessary.setConAccessary(DTO.get(i).getCode(), DTO.get(i).getCateflg(), DTO.get(i).getDay(), s);
 				break;
@@ -143,18 +154,19 @@ public class InsertDay {
 					+ " ("
 					+ COLUMN.CODE			+ " , "
 					+ COLUMN.DAYTIME	 	+ " , "
-					+ COLUMN.OPEN	 	 	+ " , "
-					+ COLUMN.MAX	 	 	+ " , "
-					+ COLUMN.MIN		 	+ " , "
-					+ COLUMN.CLOSE		 	+ " , "
-					+ COLUMN.DEKI 		 	+ " , "
-					+ COLUMN.BAYBAY 	 	+ " , "
 					+ COLUMN.AJUST_OPEN	 	+ " , "
 					+ COLUMN.AJUST_MAX	 	+ " , "
 					+ COLUMN.AJUST_MIN	 	+ " , "
 					+ COLUMN.AJUST_CLOSE 	+ " , "
 					+ COLUMN.AJUST_DEKI  	+ " , "
-					+ COLUMN.AJUST_BAYBAY	+ "  "
+					+ COLUMN.AJUST_BAYBAY	+ " , "
+					+ COLUMN.OPEN	 	 	+ " , "
+					+ COLUMN.MAX	 	 	+ " , "
+					+ COLUMN.MIN		 	+ " , "
+					+ COLUMN.CLOSE		 	+ " , "
+					+ COLUMN.DEKI 		 	+ " , "
+					+ COLUMN.BAYBAY 	 	+ "   "
+
 
 					+ " ) "
 					+ "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";

@@ -25,12 +25,12 @@ public class GetTimeSeries {
 		//取得したCSVファイルをループさせる。。
 		for (int i =0;0<NC_Con.getNC_ConUrlCsvS_STOCK_INDEX().size();i++){
 			//取得したCSVファイル１つをDTOに変換する。＝一行ごとにDTOに格納する。
-			B_B.setList_CSVtoDTO_STOCK_INDEX(NC_Con.getNC_ConUrlCsvS_STOCK_INDEX().get(i), skipLine);
+			B_B.setList_CSVtoDTO_STOCK_ETF(NC_Con.getNC_ConUrlCsvS_STOCK_INDEX().get(i),"", skipLine);
 			//インサートする
-			I_D.InsertDD(B_B.getList_CSVtoDTO_STOCK_INDEX(), s);
+			I_D.InsertDD(B_B.getList_CSVtoDTO_STOCK_ETF(), s);
 
 			//テスト用の行,、日付を取得する。
-			System.out.println(B_B.getList_CSVtoDTO_STOCK_INDEX().get(i).getDay());
+			System.out.println(B_B.getList_CSVtoDTO_STOCK_ETF().get(i).getDay());
 
 		}
 	}

@@ -19,7 +19,7 @@ public class Bean_CodelistTest {
 			System.out.println("koko");
 		}
 		System.out.println(controllDay.getAJUSTMAXDAY_STATISTICS(s));
-		System.out.println(controllDay.getAJUSTMAXDAY_STOCK_INDEX(s));
+		System.out.println(controllDay.getAJUSTMAXDAY_STOCK_ETF(s));
 		
 		
 //		fail("a");

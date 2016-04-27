@@ -1,12 +1,10 @@
 package controller;
 import insertPackage.InsertCodeList;
-import insertPackage.InsertList;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import netConnect.NetBean;
-import proparty.Net_Adress;
 import proparty.S;
 import bean.Bean_Bean;
 import bean.Bean_CodeList;
@@ -14,35 +12,35 @@ import bean.Bean_CodeList;
 public class GetCodeList {
 
 	//
-	//指標、株式、統計の一覧ををCODELISTTBLにぶっこむ。
-	public void controllCreateDB_GetList(){
-		S s = new S();
-		
-		s.getCon();
-		
-		controllGetList(s);
-
-		s.closeConection();
-	}
-
-
-	private void controllGetList(S s){
-		NetBean NB = new NetBean();
-		InsertList BBB = new InsertList();
-
-
-		//統計指標
-		Bean_Bean bbb = new Bean_Bean();
-		NB.setUrlCsv(Net_Adress.STATISTICS_LIST, 0);
-		bbb.setList_CSVtoDTO_STATISTICA(NB.getUrlCsv(),2);
-		BBB.InsertList_Day(bbb.getList_CSVtoDTO_STATISTICA(), s);
-		//株と指数
-		bbb = new Bean_Bean();
-		bbb.setList_CSVtoDTO_STOCK_INDEX(NB.getUrlCsv(),2);
-		NB.setUrlCsv(Net_Adress.STOCK_INDEX_LIST, 0);
-		BBB.InsertList_Day(bbb.getList_CSVtoDTO_STOCK_INDEX(), s);
-
-	}
+//	//指標、株式、統計の一覧ををCODELISTTBLにぶっこむ。
+//	public void controllCreateDB_GetList(){
+//		S s = new S();
+//
+//		s.getCon();
+//
+//		controllGetList(s);
+//
+//		s.closeConection();
+//	}
+//
+//
+//	private void controllGetList(S s){
+//		NetBean NB = new NetBean();
+//		InsertList BBB = new InsertList();
+//
+//
+//		//統計指標
+//		Bean_Bean bbb = new Bean_Bean();
+//		NB.setUrlCsv(Net_Adress.STATISTICS_LIST, 0);
+//		bbb.setList_CSVtoDTO_STATISTICA(NB.getUrlCsv(),2);
+//		BBB.InsertList_Day(bbb.getList_CSVtoDTO_STATISTICA(), s);
+//		//株と指数
+//		bbb = new Bean_Bean();
+//		bbb.setList_CSVtoDTO_STOCK_INDEX(NB.getUrlCsv(),2);
+//		NB.setUrlCsv(Net_Adress.STOCK_INDEX_LIST, 0);
+//		BBB.InsertList_Day(bbb.getList_CSVtoDTO_STOCK_INDEX(), s);
+//
+//	}
 
 
 
@@ -60,12 +58,12 @@ public class GetCodeList {
 		 NB.setUrlCsv("http://k-db.com/?p=all&download=csv", 2);
 		 Bean_Bean B_B = new Bean_Bean();
 		 //CSVをDTOに変換
-		 B_B.setList_CSVtoDTO_STOCK_INDEX(NB.getUrlCsv(),0);
+		 B_B.setList_CSVtoDTO_STOCK_ETF(NB.getUrlCsv(),"a",0);
 
 
 
 		//インポート開始！
-		 B_B.getList_CSVtoDTO_STOCK_INDEX();
+		 B_B.getList_CSVtoDTO_STOCK_ETF();
 		 InsertCodeList ICL = new InsertCodeList();
 
 		 List<Bean_CodeList> DTO_B_C_List = new ArrayList();

@@ -129,10 +129,9 @@ public class NetBean extends NetSuper{
 		}
 	}
 
-
-
-	public void setUrlCsv(String URL,int skipLine){
+	public boolean setUrlCsv(String URL,int skipLine){
 		netFile = new ArrayList<String>();
+//		System.out.println("ここきた" + URL);
 		HttpURLConnection connect = null;
 		URL url = null;
 		InputStream in = null;
@@ -161,20 +160,15 @@ public class NetBean extends NetSuper{
 
 
 			String lineRecord = baf.readLine();
-			System.out.println("一行目：" + lineRecord);
+//			System.out.print("一行目：" + lineRecord);
 
 			//アクセス拒否された場合の動き
 			if(lineRecord==null){
-				System.out.println("NetBean：アクセス拒否中。" + PROPARTY.SLEEPTIME + "ﾐﾘ秒待ちます。");
-				//ちょっとだけ時間に間を置く。連続アクセスするとリジェクトされる。
-				try {
-					Thread.sleep(PROPARTY.SLEEPTIME);
-				} catch (InterruptedException e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
-				}
-				setUrlCsv(URL,skipLine);
-				return;
+				baf.close();
+				isr.close();
+				in.close();//InputStreamを閉じる
+				connect.disconnect();//サイトの接続を切断
+				return false;
 			}else if(lineRecord.equals(PROPARTY.NAZO)){
 				System.out.println("NetBean：503かも。" + PROPARTY.INTERVALTIME + "ﾐﾘ秒待まってもう一回。");
 				try {
@@ -183,39 +177,165 @@ public class NetBean extends NetSuper{
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}
-				setUrlCsv(URL,skipLine);
-				return;
+
+				return setUrlCsv(URL,skipLine);
+
+//				if ( setUrlCsv(URL,skipLine) ){
+//					return true;
+//				}else {
+//					System.out.println("ふぁるす：" + URL);
+//					return false;
+//				}
+
+
+			}else if(lineRecord.equals(PROPARTY.NAZO2)){
+				System.out.println("NetBean：503かも。" + PROPARTY.INTERVALTIME + "ﾐﾘ秒待まってもう一回。"+ lineRecord);
+				try {
+					Thread.sleep(PROPARTY.INTERVALTIME);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+
+				return setUrlCsv(URL,skipLine);
+
 			}
 
 
 			netFile.add(lineRecord);
 //			System.out.println(lineRecord);
+
 			while ((lineRecord = baf.readLine()) != null) {
-//				System.out.println(lineRecord);
+//				System.out.println(lineRecord + ":" + URL);
 				netFile.add(lineRecord);
 			}
+//			System.out.println("ひょっとして・・・？");
+		}catch(IOException e1) {
+			//403エラーのときの動き
+			System.out.println("NetBean：403かも。" + PROPARTY.INTERVALTIME + "ﾐﾘ秒待まってもう一回。"+ URL);
 
+			return setUrlCsv(URL,skipLine);
 
-
-		}catch(Exception e){
+		}catch(Exception e2){
 			//例外処理が発生したら、表示する
 			//			System.out.println("Err =" + e);
-//			e.printStackTrace();
+			e2.printStackTrace();
 
-			System.out.println("ページがないよ：" + URL);
+			System.out.println("【なぞのエラー】" + URL);
+
+			return setUrlCsv(URL,skipLine);
+
 		}finally{
 			try {
 				//				URL切断
+
 				baf.close();
 				isr.close();
 				in.close();//InputStreamを閉じる
 				connect.disconnect();//サイトの接続を切断
-			} catch (IOException e) {
+			} catch (IOException e3) {
 				System.out.println("NetBean109でIOEXception");
-				e.printStackTrace();
+				e3.printStackTrace();
+			} catch (NullPointerException e5) {
+//				baf.close();でミスったとき
+
+//				System.out.println("NetBean109でnurupo");
+//				System.out.println(URL);
+			} catch (Exception e4) {
+				System.out.println("NetBean109でEXception");
+				System.out.println(URL);
+				e4.printStackTrace();
 			}
 		}
+		return true;
 	}
+
+
+//	public void setUrlCsv(String URL,int skipLine){
+//		netFile = new ArrayList<String>();
+//		HttpURLConnection connect = null;
+//		URL url = null;
+//		InputStream in = null;
+//		InputStreamReader isr = null;
+//		BufferedReader baf = null;
+//
+//		try{
+//
+//			Thread.sleep(PROPARTY.INTERVALTIME);
+//
+//			//概ねの操作で例外処理が必要です。
+//			//URLを作成する
+//			String adress= URL;
+//			url=new URL(adress);//URLを設定
+//			// URL接続
+//			connect = (HttpURLConnection)url.openConnection();//サイトに接続
+//			connect.setRequestMethod("GET");//プロトコルの設定
+//			in=connect.getInputStream();//ファイルを開く
+//			isr = new InputStreamReader( in,"SJIS");
+//			baf = new BufferedReader(isr);
+//
+//
+//			for (int i = 0;i<skipLine;i++){
+//				baf.readLine();
+//			}
+//
+//
+//			String lineRecord = baf.readLine();
+//			System.out.println("一行目：" + lineRecord);
+//
+//			//アクセス拒否された場合の動き
+//			if(lineRecord==null){
+//				System.out.println("NetBean：アクセス拒否中。" + PROPARTY.SLEEPTIME + "ﾐﾘ秒待ちます。");
+//				//ちょっとだけ時間に間を置く。連続アクセスするとリジェクトされる。
+//				try {
+//					Thread.sleep(PROPARTY.SLEEPTIME);
+//				} catch (InterruptedException e) {
+//					// TODO 自動生成された catch ブロック
+//					e.printStackTrace();
+//				}
+//				setUrlCsv(URL,skipLine);
+//				return;
+//			}else if(lineRecord.equals(PROPARTY.NAZO)){
+//				System.out.println("NetBean：503かも。" + PROPARTY.INTERVALTIME + "ﾐﾘ秒待まってもう一回。");
+//				try {
+//					Thread.sleep(PROPARTY.INTERVALTIME);
+//				} catch (InterruptedException e) {
+//					// TODO 自動生成された catch ブロック
+//					e.printStackTrace();
+//				}
+//				setUrlCsv(URL,skipLine);
+//				return;
+//			}
+//
+//
+//			netFile.add(lineRecord);
+////			System.out.println(lineRecord);
+//			while ((lineRecord = baf.readLine()) != null) {
+////				System.out.println(lineRecord);
+//				netFile.add(lineRecord);
+//			}
+//
+//
+//
+//		}catch(Exception e){
+//			//例外処理が発生したら、表示する
+//			//			System.out.println("Err =" + e);
+////			e.printStackTrace();
+//
+//			System.out.println("ページがないよ：" + URL);
+//		}finally{
+//			try {
+//				//				URL切断
+//				baf.close();
+//				isr.close();
+//				in.close();//InputStreamを閉じる
+//				connect.disconnect();//サイトの接続を切断
+//			} catch (IOException e) {
+//				System.out.println("NetBean109でIOEXception");
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 
 	public List<String> getUrlCsv(){
 		return netFile;

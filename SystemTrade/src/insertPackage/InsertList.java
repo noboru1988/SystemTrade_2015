@@ -7,6 +7,7 @@ import proparty.S;
 import proparty.TBL_Name;
 import bean.Bean_CodeList;
 import constant.COLUMN;
+import constant.ReCord;
 
 public class InsertList {
 	String SQL;
@@ -22,23 +23,23 @@ public class InsertList {
 	public void InsertList_Day(List<Bean_CodeList> DTO , S s){
 		for(int i = 0;i<DTO.size();i++){
 			switch(DTO.get(i).getCateflg()){
-			case "1":
+			case ReCord.CODE_01_STOCK:
 				InsertList_case1(DTO.get(i),s);
 				break;
-			case "2":
+			case ReCord.CODE_02_SATISTICS:
 				InsertList_case2(DTO.get(i),s);
 				break;
-			case "3":
+			case ReCord.CODE_03_INDEX:
 				InsertList_case3(DTO.get(i),s);
 				break;
-			case "4":
+			case ReCord.CODE_04_ETF:
 
 				InsertList_case4(DTO.get(i),s);
 				break;
-			case "5":
+			case ReCord.CODE_05_SAKIMONO:
 				InsertList_case5(DTO.get(i),s);
 				break;
-			case "6":
+			case ReCord.CODE_06_CURRENCY:
 				InsertList_case6(DTO.get(i),s);
 				break;
 			default:
@@ -120,8 +121,8 @@ public class InsertList {
 			// TODO ミスった時の処理
 			//							テーブル重複時の処理
 			if(e.getErrorCode()!=1062){
-				//								e.printStackTrace();
-				System.out.println("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName());
+												e.printStackTrace();
+				System.out.println("ミスったのは：" + DTO.getCode() + ":" + DTO.getCodeName() + ":" + DTO.getCateflg());
 			}
 		}
 
@@ -146,7 +147,7 @@ public class InsertList {
 		try {
 
 			//もしも指数ならテーブル名とコード(ﾃｨｯｶｰｼﾝﾎﾞﾙ)を同じにする。
-			
+
 			s.getPstmt().setString(  1,  DTO.getCode()					  );
 			s.getPstmt().setString(  2,  DTO.getCodeName()                     );
 			s.getPstmt().setString(  3,  DTO.getMarket()                       );

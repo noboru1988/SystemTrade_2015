@@ -1,12 +1,24 @@
 package common;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import proparty.S;
+import proparty.TBL_Name;
+import constant.COLUMN;
 
 public class commonAP {
 
+//	static ArrayList<String> codeList = new ArrayList<String>();
+//	static ArrayList<ArrayList<String>> codeCateList = new ArrayList<ArrayList<String>>();
+
+	static String codeSingle[] = new String[2];
+	static ArrayList<String[]> codeListwithiCate = new ArrayList<String[]>();
+//	static List<String[]> codeListwithiCate = new ArrayList<String>();
+
+	//ArrayList<ArrayList<型名>> list=new ArrayList<ArrayList <型名>>();//二次元配列の生成
 	public boolean checkMAX(S s){
 		return true;
 	}
@@ -14,7 +26,7 @@ public class commonAP {
 	//TODAYとMAXDAYを比較して、TODAYがMAX以後ならTRUE、以前ならfalse
 	public boolean checkDay(String TODAY,String MAXDAY){
 
-		if(TODAY.compareTo(MAXDAY)<=0){
+		if(TODAY.compareTo(MAXDAY)<0){
 			return false;
 		}
 
@@ -52,5 +64,56 @@ public class commonAP {
 		return sdf1.format(calendar.getTime());
 
 	}
+
+
+	public static void setCodeList(S s){
+//		codeList = new ArrayList<String>();
+//		codeCateList = new ArrayList<ArrayList<String>>();
+
+//		codeList[] = new String[2];
+		codeListwithiCate = new ArrayList<String[]>();
+//		codeSingle=null;
+		String SQL = " select " + COLUMN.CODE + "," + COLUMN.CATE_FLG + " from " + TBL_Name.CODELISTTBL;
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while ( s.rs.next() ) {
+				codeSingle = new String[2];
+				codeSingle[0]=s.rs.getString(COLUMN.CODE);
+				codeSingle[1]=s.rs.getString(COLUMN.CATE_FLG);
+
+				codeListwithiCate.add(codeSingle);
+
+			}
+
+		} catch (SQLException e) {
+
+		}
+
+	}
+
+	public static void setCodeList(String cate, S s){
+//		codeList = new ArrayList<String>();
+//		codeCateList = new ArrayList<ArrayList<String>>();
+		codeListwithiCate = new ArrayList<String[]>();
+//		codeSingle=null;
+		String SQL = " select " + COLUMN.CODE + " from " + TBL_Name.CODELISTTBL + " where " + COLUMN.CATE_FLG + " = '" + cate + "'";
+		try {
+			s.rs = s.sqlGetter().executeQuery(SQL);
+			while ( s.rs.next() ) {
+				codeSingle = new String[2];
+				codeSingle[0]=s.rs.getString(COLUMN.CODE);
+				codeSingle[1]=cate;
+				codeListwithiCate.add(codeSingle);
+			}
+
+		} catch (SQLException e) {
+
+		}
+	}
+
+	public static ArrayList<String[]> getCodeList(){
+		return codeListwithiCate;
+	}
+
 
 }

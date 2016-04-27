@@ -2,7 +2,6 @@ package GAMEN;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,11 +19,11 @@ import proparty.S;
 import proparty.TBL_Name;
 import timeSeriesDTO.DayTimeSeries;
 import timeSeriesDTO.DayTimeSeries2;
+import analysis.Analysis02_DEKI;
 import bean.Bean_CodeList;
 import botton.cloringDate;
 import botton.setUp;
 import constant.CATE_FLG;
-import constant.COLUMN;
 
 //いろいろテストする。
 
@@ -162,33 +161,19 @@ public class TAB_test extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
+			double a = 0.0;
+			double b = 0.0;
+			b=a/b;
+//			if (Double.isNaN(b)){
+//				System.out.println("aaa");
+//			}
+//			String TODAY = "1--3";
+//			String[] TODAY_SPRIT = TODAY.split("-");
+//			System.out.println(TODAY_SPRIT[0]);
+//			System.out.println(TODAY_SPRIT[1]);
+//			System.out.println(TODAY_SPRIT[2]);
 
-			S s = new S();
-			s.getCon();
-
-			String SQL;
-			SQL = " select * from " + TBL_Name.STOCK_DD + " where " + COLUMN.CODE + "='1301―T' and " + COLUMN.DAYTIME + "='2007-08-13'";
-			
-			
-			try {
-				s.rs_EDIT = s.sqlEditer().executeQuery(SQL);
-
-				//trueならレコードが存在する。
-				if(s.rs_EDIT.next()==true){
-					s.rs_EDIT.updateString(COLUMN.OPEN,"9999");
-					s.rs_EDIT.updateRow();
-					s.rs_EDIT.updateDouble(COLUMN.MIN		,1234);
-					s.rs_EDIT.updateRow();
-					System.out.println("a");
-				}
-			} catch (SQLException e1) {
-				// TODO 自動生成された catch ブロック
-				e1.printStackTrace();
-			}
-
-
-
-			s.closeConection();
+			Analysis02_DEKI.Analysis_DEKI();
 			textArea_SQLresult.append(textField.getText() + "5\n");
 		}
 	}
@@ -279,16 +264,19 @@ public class TAB_test extends JPanel {
 
 			String SQL;
 
+			SQL = "delete from " + TBL_Name.CODELISTTBL;
+			s.freeUpdateQuery(SQL);
+
 			SQL = "delete from " + TBL_Name.STOCK_DD;
+			s.freeUpdateQuery(SQL);
+
+			SQL = "delete from " + TBL_Name.STATISTICS_DD;
 			s.freeUpdateQuery(SQL);
 
 			SQL = "delete from " + TBL_Name.INDEX_DD;
 			s.freeUpdateQuery(SQL);
 
 			SQL = "delete from " + TBL_Name.ETF_DD;
-			s.freeUpdateQuery(SQL);
-
-			SQL = "delete from " + TBL_Name.STATISTICS_DD;
 			s.freeUpdateQuery(SQL);
 
 			SQL = "delete from " + TBL_Name.UPDATE_MANAGE;
